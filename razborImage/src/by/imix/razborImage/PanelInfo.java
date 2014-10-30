@@ -1,0 +1,46 @@
+package by.imix.razborImage;
+
+import org.apache.log4j.Logger;
+
+import javax.swing.*;
+import java.awt.*;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: miha
+ * Date: 14.01.14
+ * Time: 13:10
+ * To change this template use File | Settings | File Templates.
+ */
+public class PanelInfo extends JToolBar {
+    private Logger _log=Logger.getLogger(PanelInfo.class);
+    private Screen4 screen4;
+
+    private JLabel labInfo;
+    private JLabel labInfoImg;
+
+    public PanelInfo(Screen4 screen4) {
+        super("p4",JToolBar.VERTICAL);
+        this.screen4=screen4;
+        setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        setMinimumSize(new Dimension(220, 170));
+        setMaximumSize(new Dimension(220, 170));
+        setPreferredSize(new Dimension(220, 170));
+        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+
+
+        labInfo=new JLabel("");
+        add(labInfo);
+
+        labInfoImg=new JLabel("");
+        add(labInfoImg);
+    }
+
+    public void setText(String text){
+        labInfo.setText(text);
+    }
+    public void setTextInfoImg(String text){
+        labInfoImg.setText(text);
+    }
+}
