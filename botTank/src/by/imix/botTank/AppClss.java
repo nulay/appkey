@@ -144,6 +144,7 @@ public class AppClss {
                 Thread.sleep(100+r.nextInt(100));
                 robot.mousePress(InputEvent.BUTTON1_MASK);
                 robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                //System
             }
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
