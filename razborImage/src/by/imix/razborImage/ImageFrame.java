@@ -14,21 +14,19 @@ import java.awt.image.BufferedImage;
  * To change this template use File | Settings | File Templates.
  */
 public class ImageFrame extends JInternalFrame implements InternalFrameListener {
-   
+    private final Screen4 screen4;
     private ImagePanel img;
     private ToolsAction toolsAction;
-    private GlobalFrame globalFrame;
 
-    public ImageFrame(GlobalFrame globalFrame, String numFr, BufferedImage cI) {
+    public ImageFrame(Screen4 screen4, String numFr, BufferedImage cI) {
         super("Win#"+numFr,true,true,true);
-        
-        this.globalFrame=globalFrame;
+        this.screen4=screen4;
 
         setLayout(new BorderLayout());
         JPanel jlp=new JPanel(new BorderLayout());
 
         img=new ImagePanel(cI);
-        globalFrame.setCurimg(img);
+        screen4.curimg=img;
 
 //        JScrollPane js=new JScrollPane(img);
         jlp.add(new JScrollPane(img));    //   ,JLayeredPane.DEFAULT_LAYER
@@ -36,7 +34,7 @@ public class ImageFrame extends JInternalFrame implements InternalFrameListener 
 
         add(jlp, BorderLayout.CENTER);
 
-        toolsAction=new ToolsAction(cI,globalFrame);
+        toolsAction=new ToolsAction(cI,screen4);
         img.addMouseListener(toolsAction);
         img.addMouseMotionListener(toolsAction);
 
@@ -51,7 +49,7 @@ public class ImageFrame extends JInternalFrame implements InternalFrameListener 
         } catch (java.beans.PropertyVetoException e) {
         }
 
-        globalFrame.getPanelScreenshot().addFrame(this);
+        screen4.panelScreenshot.addFrame(this);
 
     }
 
@@ -65,7 +63,7 @@ public class ImageFrame extends JInternalFrame implements InternalFrameListener 
 
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
-        globalFrame.getPanelScreenshot().removeFrame(e.getSource());
+        screen4.panelScreenshot.removeFrame(e.getSource());
     }
 
     @Override
@@ -85,8 +83,8 @@ public class ImageFrame extends JInternalFrame implements InternalFrameListener 
 
     @Override
     public void internalFrameActivated(InternalFrameEvent e) {
-        globalFrame.getPanelScreenshot().setSelectedEl((ImageFrame)e.getSource());
-        globalFrame.getPanelInfo().setTextInfoImg("<html>Ширина:"+img.getImage().getWidth()+"<br>Высота:"+img.getImage().getHeight()+"</html>" );
+        screen4.panelScreenshot.setSelectedEl((ImageFrame)e.getSource());
+        screen4.panelInfo.setTextInfoImg("<html>Ширина:"+img.getImage().getWidth()+"<br>Высота:"+img.getImage().getHeight()+"</html>" );
     }
 
     @Override

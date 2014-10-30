@@ -15,6 +15,7 @@ import by.imix.keyReader.KeyRazbor;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -24,47 +25,61 @@ import java.util.Set;
 /**
  * @author mutagen
  */
-public class Screen4 extends JFrame implements GlobalFrame {
-    private Logger _log = Logger.getLogger(Screen4.class);
+public class Screen4 extends JFrame{
+    private Logger _log=Logger.getLogger(Screen4.class);
+
+    public static final Integer ZAHVAT=1;
+    public static final Integer PLAY = 2;
+    public static final Integer REC = 3;
+    public static final Integer AUTO_ZAHVAT = 4;
 
     private java.util.Set pointColor;
     private KeyRazbor ks;
-    private java.util.List<Point> listO = new ArrayList<Point>();
+    private java.util.List<Point> listO=new ArrayList<Point>();
 
-    private AppClss clss;
+    protected AppClss clss;
 
-    private GlobalKeyListenerExample glklE;
-    private FileOperation fo;
+    protected GlobalKeyListenerExample glklE;
+    protected FileOperation fo;
 
-    public FileOperation getFileOperation() {
-        return fo;
-    }
 
-    public void setFileOperation(FileOperation fo) {
-        this.fo = fo;
-    }
+    public static final BevelBorder ON_BORDER = new BevelBorder(BevelBorder.LOWERED,Color.LIGHT_GRAY,Color.GRAY);
+    public static final BevelBorder OFF_BORDER = new BevelBorder(BevelBorder.RAISED,Color.LIGHT_GRAY,Color.GRAY);
+    protected Integer keySt=null;
 
-    private Integer keySt = null;
 
 
     private ToolsAction toolsAction;
     private JDesktopPane jdpDesktop;
 
-    private int keyinstr = 0;
+    protected int keyinstr=0;
 
     private PanelToolsEmulation panelToolsEmulation;
-    private PanelToolsFiltr panelToolsFiltr;
-    private PanelScreenshot panelScreenshot;
-    private PanelInfo panelInfo;
+    protected PanelToolsFiltr panelToolsFiltr;
+    protected PanelScreenshot panelScreenshot;
+    protected PanelInfo panelInfo;
 
     public Screen4() {
-        fo = new FileOperation();
+        fo=new FileOperation();
         getContentPane().setLayout(new BorderLayout());
 
-        JPanel pWin = new JPanel(new BorderLayout());
+        JPanel pWin=new JPanel(new BorderLayout());
 
-        JButton but2Analiz = new JButton("Анализ");
-        JButton but3runBoy = new JButton("Начать бой");
+        JButton but2Analiz=new JButton("Анализ");
+        JButton but3runBoy=new JButton("Начать бой");
+
+//        but10OnRectObl.setEnabled(true);
+
+//        JPanel jpButtontop=new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+//        jpButtontop.add(but2Analiz);
+//        jpButtontop.add(but3runBoy);
+//        jpButtontop.add(but11createFColor);
+//        jpButtontop.add(but4Play);
+//        jpButtontop.add(but5Rec);
+//        jpButtontop.add(but6Folder);
+
+
 
         but2Analiz.addActionListener(new ActionListener() {
             @Override
@@ -135,25 +150,26 @@ public class Screen4 extends JFrame implements GlobalFrame {
             }
         });
 
-        JPanel tools = new JPanel();
+        JPanel tools=new JPanel();
         tools.setBorder(ON_BORDER);
         tools.setLayout(new BoxLayout(tools, BoxLayout.Y_AXIS));
 
-        panelToolsEmulation = new PanelToolsEmulation(this);
+        panelToolsEmulation=new PanelToolsEmulation(this);
         tools.add(panelToolsEmulation);
 
-        panelToolsFiltr = new PanelToolsFiltr(this);
+        panelToolsFiltr=new PanelToolsFiltr(this);
         tools.add(panelToolsFiltr);
 
-        panelScreenshot = new PanelScreenshot(this);
+        panelScreenshot=new PanelScreenshot(this);
         tools.add(panelScreenshot);
 
-        panelInfo = new PanelInfo(this);
+        panelInfo=new PanelInfo(this);
         tools.add(panelInfo);
 
         add(new JScrollPane(tools, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.EAST);
 
 //        pWin.add(jpButtontop,BorderLayout.NORTH);
+
 
 
         add(pWin, BorderLayout.CENTER);
@@ -209,27 +225,28 @@ public class Screen4 extends JFrame implements GlobalFrame {
         return panelToolsEmulation;
     }
 
-    public void searthPoint() {
+    public void searthPoint(){
         listO.clear();
-        for (int x = 0; x < cI.getWidth(); x++) {
-            for (int y = 0; y < cI.getHeight(); y++) {
+        for(int x=0;x<cI.getWidth();x++){
+            for(int y=0; y<cI.getHeight();y++){
                 int[] rgb = cI.getRaster().getPixel(x, y, new int[3]);
-                if (issueColor(rgb)) {
-                    listO.add(new Point(x, y));
+                if(issueColor(rgb)){
+                    listO.add(new Point(x,y));
                 }
             }
         }
     }
 
-    public boolean issueColor(int[] rgb) {
-        for (Object rgbw : pointColor) {
-            int[] rgbSh = (int[]) rgbw;
-            if (rgb[0] == rgbSh[0] && rgb[1] == rgbSh[1] && rgb[2] == rgbSh[2]) {
+    public boolean issueColor(int[] rgb){
+        for(Object rgbw:pointColor){
+            int[] rgbSh= (int[]) rgbw;
+            if(rgb[0]==rgbSh[0] && rgb[1]==rgbSh[1] && rgb[2]==rgbSh[2]){
                 return true;
             }
         }
         return false;
     }
+
 
 
     /**
@@ -239,13 +256,13 @@ public class Screen4 extends JFrame implements GlobalFrame {
         new Screen4();
     }
 
-    private BufferedImage cI = null;
-    private ImagePanel curimg = null;
-    private int numFr = 0;
+    private BufferedImage cI=null;
+    protected ImagePanel curimg=null;
+    private int numFr=0;
 
 
-    public void grabScreen() {
-        BufferedImage cId = null;
+    public void grabScreen(){
+        BufferedImage cId=null;
         try {
             Robot robot = new Robot();
             cId = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
@@ -262,10 +279,12 @@ public class Screen4 extends JFrame implements GlobalFrame {
     }
 
     public void openNewScrenPan(BufferedImage bi) {
-        cI = bi;
+        cI=bi;
         numFr++;
-        ImageFrame imF = new ImageFrame(this, numFr + "", cI);
+        ImageFrame imF=new ImageFrame(this,numFr+"",cI);
         jdpDesktop.add(imF);
+
+
     }
 
     public void stopPoehali() {
@@ -279,7 +298,13 @@ public class Screen4 extends JFrame implements GlobalFrame {
         } catch (AWTException ex) {
             _log.error(ex.getMessage());
         }
+//        for(Filtr f: groupFiltr.getListFiltr()){
+//            f.isCorrect(cI);
+//        }
     }
+
+
+
 
     public Set getPointColor() {
         return pointColor;
@@ -290,63 +315,5 @@ public class Screen4 extends JFrame implements GlobalFrame {
     }
 
 
-    @Override
-    public void setCurimg(ImagePanel imagePanel) {
-        this.curimg = imagePanel;
-    }
-
-    @Override
-    public ImagePanel getCurimg() {
-        return curimg;
-    }
-
-    @Override
-    public int getKeyinstr() {
-        return keyinstr;
-    }
-
-    @Override
-    public void setKeyinstr(int keyinstr) {
-        this.keyinstr = keyinstr;
-    }
-
-    @Override
-    public PanelToolsFiltr getPanelToolsFiltr() {
-        return panelToolsFiltr;
-    }
-
-    @Override
-    public PanelInfo getPanelInfo() {
-        return panelInfo;
-    }
-
-    @Override
-    public PanelScreenshot getPanelScreenshot() {
-        return panelScreenshot;
-    }
-
-    public Integer getKeySt() {
-        return keySt;
-    }
-
-    public void setKeySt(Integer keySt) {
-        this.keySt = keySt;
-    }
-
-    public AppClss getClss() {
-        return clss;
-    }
-
-    public void setClss(AppClss clss) {
-        this.clss = clss;
-    }
-
-    public GlobalKeyListenerExample getGlklE() {
-        return glklE;
-    }
-
-    public void setGlklE(GlobalKeyListenerExample glklE) {
-        this.glklE = glklE;
-    }
 }
 

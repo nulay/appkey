@@ -1,7 +1,5 @@
 package by.imix.razborImage;
 
-import by.imix.razborImage.pointWork.Area;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class Figure extends JPanel {
-    private java.util.List<Area> areaList;
+    private java.util.List<MyRect> myRectList;
 
 //    public static final Integer RECT=1;
 //    public static final Integer OVAL=0;
@@ -25,9 +23,9 @@ public class Figure extends JPanel {
 
     Figure() {
         setOpaque(false);
-        areaList =new ArrayList<Area>();
-//        Area r=new Area(10,10,40,40);
-//        areaList.add(r);
+        myRectList=new ArrayList<MyRect>();
+//        MyRect r=new MyRect(10,10,40,40);
+//        myRectList.add(r);
 //        setBounds(r.getBx(), r.getBy(), r.getWidth(),r.getHeight());
         //setBounds(beg.getX(), beg.getY(), end.getX() - beg.getX(), end.getY() - beg.getY());
     }
@@ -44,32 +42,32 @@ public class Figure extends JPanel {
         BasicStroke pen1 = new BasicStroke(20, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 20, dashl, 0);
         g2.setStroke(pen1);
 
-        for (Area mr : areaList) {
+        for (MyRect mr : myRectList) {
             g2.fillRect(mr.getBeginPoint().getX(), mr.getBeginPoint().getY(), mr.getWidth(), mr.getHeight());
         }
 
         g2.setColor(oldColor);
     }
 
-    public boolean addRect(Area area){
-        boolean k= areaList.add(area);
-        this.repaintNew(area);
+    public boolean addRect(MyRect myRect){
+        boolean k=myRectList.add(myRect);
+        this.repaintNew(myRect);
         return k;
     }
 
-    public boolean removeRect(Area area){
-        return areaList.remove(area);
+    public boolean removeRect(MyRect myRect){
+        return myRectList.remove(myRect);
     }
 
-    public List<Area> getAreaList() {
-        return areaList;
+    public List<MyRect> getMyRectList() {
+        return myRectList;
     }
 
-    public void setAreaList(List<Area> areaList) {
-        this.areaList = areaList;
+    public void setMyRectList(List<MyRect> myRectList) {
+        this.myRectList = myRectList;
     }
 
-    public void repaintNew(Area mr) {
+    public void repaintNew(MyRect mr) {
         setBounds(mr.getBeginPoint().getX(),mr.getBeginPoint().getY(),mr.getWidth(),mr.getHeight());
         this.repaint();
        // repaint();

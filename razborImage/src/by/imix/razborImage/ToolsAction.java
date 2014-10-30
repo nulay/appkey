@@ -2,8 +2,6 @@ package by.imix.razborImage;
 
 import by.imix.razborImage.filters.ColorInRectFilter;
 import by.imix.razborImage.filters.FullConcurrenceRect;
-import by.imix.razborImage.pointWork.Area;
-import by.imix.razborImage.pointWork.Point;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -23,12 +21,12 @@ import java.util.HashSet;
 public class ToolsAction implements MouseListener, MouseMotionListener {
 
     private BufferedImage bi;
-    private Point bound;
-    private GlobalFrame globalFrame;
+    private Screen4 sc4;
+    private MyPoint bound;
 
-    public ToolsAction(BufferedImage bi, GlobalFrame globalFrame) {
+    public ToolsAction(BufferedImage bi,Screen4 sc4) {
         this.bi = bi;
-        this.globalFrame=globalFrame;
+        this.sc4 = sc4;
     }
 
     @Override
@@ -38,31 +36,31 @@ public class ToolsAction implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(globalFrame.getKeyinstr()==1 | globalFrame.getKeyinstr()==3){
-            bound=new Point(e.getX(),e.getY());
+        if(sc4.keyinstr==1 | sc4.keyinstr==3){
+            bound=new MyPoint(e.getX(),e.getY());
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(globalFrame.getKeyinstr()==1){
-            Area mr=new Area(bound.getX(), bound.getY(), e.getX(), e.getY());
+        if(sc4.keyinstr==1){
+            MyRect mr=new MyRect(bound.getX(), bound.getY(), e.getX(), e.getY());
             ((ImagePanel)e.getSource()).addRect(mr);
             BufferedImage r=bi.getSubimage(mr.getBeginPoint().getX(), mr.getBeginPoint().getY(), mr.getWidth(), mr.getHeight());
             FullConcurrenceRect fcr=new FullConcurrenceRect(mr,r);
-            globalFrame.getPanelToolsFiltr().addComponentFiltr(fcr);
+            sc4.panelToolsFiltr.addComponentFiltr(fcr);
             bound=null;
 //                jlp.repaint();
         }
-        if(globalFrame.getKeyinstr()==3){
-            Area mr=new Area(bound.getX(), bound.getY(), e.getX(), e.getY());
+        if(sc4.keyinstr==3){
+            MyRect mr=new MyRect(bound.getX(), bound.getY(), e.getX(), e.getY());
             ((ImagePanel)e.getSource()).addRect(mr);
             //BufferedImage r=bi.getSubimage(mr.getBeginPoint().getX(), mr.getBeginPoint().getY(), mr.getWidth(), mr.getHeight());
-            ColorInRectFilter fcr=new ColorInRectFilter(mr,globalFrame.getPointColor());
-            globalFrame.getPanelToolsFiltr().addComponentFiltr(fcr);
+            ColorInRectFilter fcr=new ColorInRectFilter(mr,sc4.getPointColor());
+            sc4.panelToolsFiltr.addComponentFiltr(fcr);
             bound=null;
         }
-        if(globalFrame.getKeyinstr()==2){
+        if(sc4.keyinstr==2){
             int x = e.getX();
             int y = e.getY();
 
@@ -87,11 +85,11 @@ public class ToolsAction implements MouseListener, MouseMotionListener {
             addPointinPC(pointColor,rgb7);
             addPointinPC(pointColor,rgb8);
 
-            globalFrame.setPointColor(pointColor);
+            sc4.setPointColor(pointColor);
 
             ((ImagePanel)e.getSource()).drawKrest(x,y);
 
-            globalFrame.getCurimg().redrawImg(bi);
+            sc4.curimg.redrawImg(bi);
             JDialog dialog = new JDialog();
             JPanel p=new JPanel();
             p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
@@ -101,7 +99,7 @@ public class ToolsAction implements MouseListener, MouseMotionListener {
             }
             dialog.add(p);
             dialog.pack();
-            globalFrame.setKeyinstr(3);
+            sc4.keyinstr=3;
             dialog.setVisible(true);
         }
     }
@@ -137,6 +135,6 @@ public class ToolsAction implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        globalFrame.getPanelInfo().setText("X:"+e.getX()+"; Y:"+e.getY());
+        sc4.panelInfo.setText("X:"+e.getX()+"; Y:"+e.getY());
     }
 }

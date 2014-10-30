@@ -14,12 +14,12 @@ import java.awt.*;
  */
 public class PanelInfo extends JToolBar {
     private Logger _log=Logger.getLogger(PanelInfo.class);
-    private JFrame screen4;
+    private Screen4 screen4;
 
     private JLabel labInfo;
     private JLabel labInfoImg;
 
-    public PanelInfo(JFrame screen4) {
+    public PanelInfo(Screen4 screen4) {
         super("p4",JToolBar.VERTICAL);
         this.screen4=screen4;
         setAlignmentX(Component.LEFT_ALIGNMENT);

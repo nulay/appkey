@@ -8,9 +8,12 @@ import by.imix.razborImage.filters.dialogFilter.DialogFilter;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -19,6 +22,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -30,7 +35,7 @@ import java.util.Vector;
  */
 public class PanelToolsFiltr extends JToolBar implements ActionListener{
     private Logger _log=Logger.getLogger(PanelToolsFiltr.class);
-    private GlobalFrame screen4;
+    private Screen4 screen4;
 
     private JButton but1createCarta;
     private JButton but2createGroup;
@@ -53,7 +58,7 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
     private JFileChooser saverFileFiltr;
     private JFileChooser openerFile;
 
-    public PanelToolsFiltr(GlobalFrame screen4) {
+    public PanelToolsFiltr(Screen4 screen4) {
         super("p2",JToolBar.VERTICAL);
 //        setLayout();
         setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -183,24 +188,24 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(((JButton)e.getSource()).getName().equals("but10OnRectObl")){
-            if(screen4.getKeyinstr()==0){
-                screen4.setKeyinstr(1);
+            if(screen4.keyinstr==0){
+                screen4.keyinstr=1;
                 but10OnRectObl.setBorder(screen4.ON_BORDER);
             }else{
-                if(screen4.getKeyinstr()==1){
-                    screen4.setKeyinstr(0);
+                if(screen4.keyinstr==1){
+                    screen4.keyinstr=0;
                     but10OnRectObl.setBorder(screen4.OFF_BORDER);
                 }
             }
         }
 
         if(((JButton)e.getSource()).getName().equals("but11createFColor")){
-            if(screen4.getKeyinstr()==0){
-                screen4.setKeyinstr(2);
+            if(screen4.keyinstr==0){
+                screen4.keyinstr=2;
                 but11createFColor.setBorder(screen4.ON_BORDER);
             }else{
-                if(screen4.getKeyinstr()==2 | screen4.getKeyinstr()==3){
-                    screen4.setKeyinstr(0);
+                if(screen4.keyinstr==2 | screen4.keyinstr==3){
+                    screen4.keyinstr=0;
                     but11createFColor.setBorder(screen4.OFF_BORDER);
                 }
             }
@@ -225,15 +230,15 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
                     }
                 });
             }
-            int res=saverFileFiltr.showSaveDialog((Component) screen4);
+            int res=saverFileFiltr.showSaveDialog(screen4);
             if(res==JFileChooser.APPROVE_OPTION){
                 File file=saverFileFiltr.getSelectedFile();
                 if(!file.getName().endsWith(".cat")){
                     file=new File(file.getParentFile(),file.getName()+".cat");
                 }
-                screen4.getFileOperation().saveFile(file,(Carta)((DefaultMutableTreeNode)jTree.getLastSelectedPathComponent()).getUserObject());
+                screen4.fo.saveFile(file,(Carta)((DefaultMutableTreeNode)jTree.getLastSelectedPathComponent()).getUserObject());
 
-                JOptionPane.showMessageDialog((Component) screen4,"Файл сохранен");
+                JOptionPane.showMessageDialog(screen4,"Файл сохранен");
             }
 
         }
@@ -257,10 +262,10 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
                     }
                 });
             }
-            int res = openerFile.showOpenDialog((Component) screen4);
+            int res = openerFile.showOpenDialog(screen4);
             if (res == JFileChooser.APPROVE_OPTION) {
                 File file = openerFile.getSelectedFile();
-                Carta crt=(Carta)screen4.getFileOperation().readObjectFromFile(file);
+                Carta crt=(Carta)screen4.fo.readObjectFromFile(file);
                 addCartaToTree(crt);
             }
         }
@@ -315,7 +320,7 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
 
     public void addComponentFiltr(ComponentFiltrov fcr) {
         if(fcr instanceof Filtr){
-            int res=DialogFilter.openDialog((Frame) screen4,(Filtr)fcr);
+            int res=DialogFilter.openDialog(screen4,(Filtr)fcr);
             if(res==1){
                 _log.info("nagali ok");
             }
@@ -344,7 +349,7 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
     }
 
     public void showDialogSettingsCart(final Carta cart){
-        final JDialog dialog =new JDialog((Frame) screen4,"Настройки карты",true);
+        final JDialog dialog =new JDialog(screen4,"Настройки карты",true);
         dialog.getContentPane().setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
         JPanel p1=new JPanel(new FlowLayout(FlowLayout.LEFT));
         p1.add(new JLabel("Название Карты"));
@@ -386,7 +391,7 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
     }
 
     public void showDialogSettingsGroup(final GroupFiltr grfilter){
-        final JDialog dialog =new JDialog((Frame) screen4,"Настройки группы",true);
+        final JDialog dialog =new JDialog(screen4,"Настройки группы",true);
         dialog.getContentPane().setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
         JPanel p1=new JPanel(new FlowLayout(FlowLayout.LEFT));
         p1.add(new JLabel("Название группы"));

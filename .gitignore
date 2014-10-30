@@ -1,6 +1,5 @@
 $ cat .gitignore
 .idea
-*/*.iml
 *.iml
 out
 log

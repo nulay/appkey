@@ -30,8 +30,8 @@ import java.util.Vector;
  */
 public class PanelScreenshot extends JToolBar implements FocusListener, ActionListener, EventStop {
     private Logger _log=Logger.getLogger(PanelScreenshot.class);
-    
-    GlobalFrame globalFrame;
+    private Screen4 screen4;
+
     private JList listScr;
 
     private Vector<ImageFrame> jifList;
@@ -49,10 +49,10 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
 
     private KeyRazbor ks;
 
-    public PanelScreenshot(GlobalFrame globalFrame) {
+    public PanelScreenshot(Screen4 screen4) {
         super("p3",JToolBar.VERTICAL);
-        setAlignmentX(Component.LEFT_ALIGNMENT);       
-        this.globalFrame=globalFrame;
+        setAlignmentX(Component.LEFT_ALIGNMENT);
+        this.screen4=screen4;
 
         JPanel rPanel=new JPanel();
         rPanel.setLayout(new BoxLayout(rPanel,BoxLayout.Y_AXIS));
@@ -89,20 +89,20 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
 
         but1HandZahvat=new JButton(new ImageIcon("images/play.png"));
         but1HandZahvat.setName("but1HandZahvat");
-        but1HandZahvat.setBorder(globalFrame.OFF_BORDER);
+        but1HandZahvat.setBorder(screen4.OFF_BORDER);
         but2AutoZahvat=new JButton(new ImageIcon("images/play.png"));
         but2AutoZahvat.setName("but2AutoZahvat");
-        but2AutoZahvat.setBorder(globalFrame.OFF_BORDER);
+        but2AutoZahvat.setBorder(screen4.OFF_BORDER);
         but3SaveScreen=new JButton(new ImageIcon("images/save.png"));
         but3SaveScreen.setName("but3SaveScreen");
-        but3SaveScreen.setBorder(globalFrame.OFF_BORDER);
+        but3SaveScreen.setBorder(screen4.OFF_BORDER);
         but4openScreen=new JButton(new ImageIcon("images/folder.png"));
         but4openScreen.setName("but4openScreen");
-        but4openScreen.setBorder(globalFrame.OFF_BORDER);
+        but4openScreen.setBorder(screen4.OFF_BORDER);
 
         test=new JButton(new ImageIcon("images/play.png"));
         test.setName("test");
-        test.setBorder(globalFrame.OFF_BORDER);
+        test.setBorder(screen4.OFF_BORDER);
 
         test.addActionListener(new ActionListener() {
             @Override
@@ -153,7 +153,7 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
                     }
                 });
             }
-            int res=saverFileFiltr.showSaveDialog((Component) globalFrame);
+            int res=saverFileFiltr.showSaveDialog(screen4);
             if(res==JFileChooser.APPROVE_OPTION){
                 File file=saverFileFiltr.getSelectedFile();
                 if(!file.getName().endsWith(".png")){
@@ -161,12 +161,12 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
                 }
 
                 try {
-                    ImageIO.write(globalFrame.getCurimg().getImage(), "png", file);
+                    ImageIO.write(screen4.curimg.getImage(), "png", file);
                 } catch (IOException e1) {
-                    JOptionPane.showInternalMessageDialog((Component) globalFrame,"Не удалось сохранить файл","Ошибка!",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showInternalMessageDialog(screen4,"Не удалось сохранить файл","Ошибка!",JOptionPane.ERROR_MESSAGE);
                 }
 
-                JOptionPane.showMessageDialog((Component) globalFrame,"Файл сохранен");
+                JOptionPane.showMessageDialog(screen4,"Файл сохранен");
             }
         }
 
@@ -190,7 +190,7 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
                     }
                 });
             }
-            int res = openerFile.showOpenDialog((Component) globalFrame);
+            int res = openerFile.showOpenDialog(screen4);
             if (res == JFileChooser.APPROVE_OPTION) {
                 File[] listF = openerFile.getSelectedFiles();
                 for (File f : listF) {
@@ -198,32 +198,32 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
                     try {
                         bi = ImageIO.read(f);
                     } catch (IOException e1) {
-                        JOptionPane.showInternalMessageDialog((Component) globalFrame, "Не удалось считать файл " + f.getAbsolutePath(), "Ошибка!", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showInternalMessageDialog(screen4, "Не удалось считать файл " + f.getAbsolutePath(), "Ошибка!", JOptionPane.ERROR_MESSAGE);
                     }
-                    globalFrame.openNewScrenPan(bi);
+                    screen4.openNewScrenPan(bi);
                 }
             }
         }
 
         if(((JButton)e.getSource()).getName().equals("but1HandZahvat")){
-            if(globalFrame.getKeySt()==null){
+            if(screen4.keySt==null){
                 ks = new KeyRazbor(this);
-                but1HandZahvat.setBorder(globalFrame.ON_BORDER);
-                globalFrame.setKeySt(GlobalFrame.ZAHVAT);
+                but1HandZahvat.setBorder(screen4.ON_BORDER);
+                screen4.keySt=Screen4.ZAHVAT;
             }else{
-                if(globalFrame.getKeySt()== Screen4.ZAHVAT){
+                if(screen4.keySt==Screen4.ZAHVAT){
                     ks.unregisterNativeHook();
                     ks=null;
-                    but1HandZahvat.setBorder(globalFrame.OFF_BORDER);
-                    globalFrame.setKeySt(null);
+                    but1HandZahvat.setBorder(screen4.OFF_BORDER);
+                    screen4.keySt=null;
                 }
             }
         }
 
         if(((JButton)e.getSource()).getName().equals("but2AutoZahvat")){
-            if(globalFrame.getKeySt()==null){
-                but2AutoZahvat.setBorder(globalFrame.ON_BORDER);
-                globalFrame.setKeySt(Screen4.AUTO_ZAHVAT);
+            if(screen4.keySt==null){
+                but2AutoZahvat.setBorder(screen4.ON_BORDER);
+                screen4.keySt=Screen4.AUTO_ZAHVAT;
                 for(int i=0;i<10; i++){
                     try {
                         Thread.sleep(3000L);
@@ -231,8 +231,8 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
                     }
                     firePressed();
                 }
-                but2AutoZahvat.setBorder(globalFrame.OFF_BORDER);
-                globalFrame.setKeySt(null);
+                but2AutoZahvat.setBorder(screen4.OFF_BORDER);
+                screen4.keySt=null;
             }
         }
     }
@@ -265,7 +265,7 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
 
     @Override
     public void firePressed() {
-        globalFrame.grabScreen();
+        screen4.grabScreen();
     }
 
     public void setSelectedEl(ImageFrame selectedEl) {

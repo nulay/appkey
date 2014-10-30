@@ -1,7 +1,7 @@
 package by.imix.razborImage.filters;
 
 import by.imix.keyReader.ObKeyPressed;
-import by.imix.razborImage.pointWork.Area;
+import by.imix.razborImage.MyRect;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
@@ -15,14 +15,14 @@ import java.io.Serializable;
  */
 public class FullConcurrenceRect implements Filtr, Serializable{
 //    private Logger _log=Logger.getLogger(FullConcurrenceRect.class);
-    private Area rect;
+    private MyRect rect;
     // private BufferedImage rectImage;
     private String name;
     private int[] massRGB;
     private ObKeyPressed obkp;
     private boolean keyRootStart;
 
-    public FullConcurrenceRect(Area rect, BufferedImage rectImage) {
+    public FullConcurrenceRect(MyRect rect, BufferedImage rectImage) {
         this.rect = rect;
         setRectImage(rectImage);
         //this.rectImage = rectImage;
@@ -73,11 +73,11 @@ public class FullConcurrenceRect implements Filtr, Serializable{
         return getName();
     }
 
-    public Area getRect() {
+    public MyRect getRect() {
         return rect;
     }
 
-    public void setRect(Area rect) {
+    public void setRect(MyRect rect) {
         this.rect = rect;
     }
 
