@@ -1,7 +1,7 @@
 package by.imix.razborImage.filters;
 
 import by.imix.keyReader.ObKeyPressed;
-import by.imix.razborImage.MyRect;
+import by.imix.razborImage.pointWork.Area;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
@@ -17,18 +17,18 @@ import java.util.Set;
 public class ColorInRectFilter implements Filtr, Serializable {
 //    private Logger _log=Logger.getLogger(ColorInRectFilter.class);
     private java.util.Set pointColor;
-    private MyRect rect;
+    private Area rect;
     private String name;
     private boolean keyPrisut=true;//искать присутствие цвета или отсутствие по умолчанию присутствие
     private ObKeyPressed obKeyPressed;
     private boolean keyRootStart;
 
-    public ColorInRectFilter(MyRect rect, Set pointColor) {
+    public ColorInRectFilter(Area rect, Set pointColor) {
         this.pointColor = pointColor;
         this.rect = rect;
     }
 
-    public ColorInRectFilter(MyRect rect, Set pointColor, boolean keyPrisut) {
+    public ColorInRectFilter(Area rect, Set pointColor, boolean keyPrisut) {
         this.pointColor = pointColor;
         this.rect = rect;
         this.keyPrisut=keyPrisut;
@@ -79,11 +79,11 @@ public class ColorInRectFilter implements Filtr, Serializable {
         this.name = name;
     }
 
-    public MyRect getRect() {
+    public Area getRect() {
         return rect;
     }
 
-    public void setRect(MyRect rect) {
+    public void setRect(Area rect) {
         this.rect = rect;
     }
 

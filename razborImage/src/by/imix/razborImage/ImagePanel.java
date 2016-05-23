@@ -1,5 +1,8 @@
 package by.imix.razborImage;
 
+import by.imix.razborImage.pointWork.Area;
+import by.imix.razborImage.pointWork.Point;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,8 +17,8 @@ import java.util.ArrayList;
  */
 public class ImagePanel extends JPanel {
 
-    java.util.List<MyPoint> listSelKr=new ArrayList<MyPoint>();
-    private java.util.List<MyRect> myRectList=new ArrayList<MyRect>();
+    java.util.List<Point> listSelKr=new ArrayList<Point>();
+    private java.util.List<Area> areaList =new ArrayList<Area>();
 
     private Color krestColor=Color.DARK_GRAY;
 
@@ -37,7 +40,7 @@ public class ImagePanel extends JPanel {
         g2.drawImage(bi, null, WIDTH, HEIGHT);
 
         g2.setColor(krestColor);
-        for(MyPoint mp:listSelKr){
+        for(Point mp:listSelKr){
             g2.drawLine(mp.getX(),mp.getY()-5,mp.getX(),mp.getY()+5);
             g2.drawLine(mp.getX()-5,mp.getY(),mp.getX()+5,mp.getY());
         }
@@ -46,7 +49,7 @@ public class ImagePanel extends JPanel {
         BasicStroke pen1 = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 2, dashl, 0);
         g2.setStroke(pen1);
 
-        for (MyRect mr : myRectList) {
+        for (Area mr : areaList) {
             g2.drawRect(mr.getBeginPoint().getX(), mr.getBeginPoint().getY(), mr.getWidth(), mr.getHeight());
         }
 
@@ -55,7 +58,7 @@ public class ImagePanel extends JPanel {
         BasicStroke pen2 = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 2, dash2, 0);
         g2.setStroke(pen2);
 
-        for (MyRect mr : myRectList) {
+        for (Area mr : areaList) {
             g2.drawRect(mr.getBeginPoint().getX(), mr.getBeginPoint().getY(), mr.getWidth(), mr.getHeight());
         }
 
@@ -74,29 +77,29 @@ public class ImagePanel extends JPanel {
     }
 
     public boolean drawKrest(int x, int y) {
-        boolean k=listSelKr.add(new MyPoint(x,y));
+        boolean k=listSelKr.add(new Point(x,y));
         this.repaint();
         return k;
     }
 
-    public boolean addRect(MyRect myRect){
-        boolean k=myRectList.add(myRect);
+    public boolean addRect(Area area){
+        boolean k= areaList.add(area);
         this.repaint();
         return k;
     }
 
-    public boolean removeRect(MyRect myRect){
-        boolean k=myRectList.remove(myRect);
+    public boolean removeRect(Area area){
+        boolean k= areaList.remove(area);
         this.repaint();
         return k;
     }
 
-    public java.util.List<MyRect> getMyRectList() {
-        return myRectList;
+    public java.util.List<Area> getAreaList() {
+        return areaList;
     }
 
-    public void setMyRectList(java.util.List<MyRect> myRectList) {
-        this.myRectList = myRectList;
+    public void setAreaList(java.util.List<Area> areaList) {
+        this.areaList = areaList;
     }
 
     public BufferedImage getImage() {

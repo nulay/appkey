@@ -3,15 +3,12 @@ package by.imix.botTank;
 import by.imix.keyReader.KeyPressed;
 import org.apache.log4j.Logger;
 
-import java.awt.*;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,7 +28,7 @@ public class AppClss {
     }
 
     public void setAction(List<KeyPressed> lkp){
-        this.lkp=lkp;
+      this.lkp=lkp;
     }
 
     public void playNow(List<KeyPressed> lkpNow) {
@@ -87,9 +84,9 @@ public class AppClss {
                     KeyPressed kp2=lkp.get(i+1);
                     try {
                         Long time=kp2.getPressed()-kp1.getPressed();
-                        if(time<0){
-                            time=0L;
-                        }
+                       if(time<0){
+                           time=0L;
+                       }
                         Thread.sleep(time);
 //                        Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -128,32 +125,7 @@ public class AppClss {
 //            d8.start();
     }
 
-
     public static void main(String[] args){
-        try {
-            Robot robot = new Robot();
-//            robot.mousePress(InputEvent.BUTTON3_MASK);
-//            robot.mouseRelease(InputEvent.BUTTON3_MASK);
-            Random r=new Random();
-            Thread.sleep(1200+r.nextInt(600));
-            while(true){
-                Thread.sleep(200+r.nextInt(600));
-                robot.mouseMove(1000+r.nextInt(20),530+r.nextInt(30));
-                Thread.sleep(200+r.nextInt(300));
-                robot.mouseMove(1000+r.nextInt(15),470+r.nextInt(20));
-                Thread.sleep(100+r.nextInt(100));
-                robot.mousePress(InputEvent.BUTTON1_MASK);
-                robot.mouseRelease(InputEvent.BUTTON1_MASK);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-
-        } catch (AWTException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
-
-    public static void mains(String[] args){
         System.out.println("Проигрование эмуляции начнется через 10 секунд");
         try {
             Thread.sleep(10L*1000L);

@@ -1,4 +1,4 @@
-package by.imix.razborImage;
+package by.imix.razborImage.poinBuilderWindow;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +12,7 @@ import by.imix.botTank.AppClss;
 import by.imix.botTank.Poehali;
 import by.imix.keyReader.GlobalKeyListenerExample;
 import by.imix.keyReader.KeyRazbor;
+import by.imix.razborImage.*;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -24,41 +25,34 @@ import java.util.Set;
 /**
  * @author mutagen
  */
-public class Screen4 extends JFrame implements GlobalFrame {
-    private Logger _log = Logger.getLogger(Screen4.class);
+public class PoinBuilderFrame extends JFrame implements GlobalFrame {
+    private Logger _log = Logger.getLogger(PoinBuilderFrame.class);
 
-    private java.util.Set pointColor;
+    private Set pointColor;
     private KeyRazbor ks;
     private java.util.List<Point> listO = new ArrayList<Point>();
 
-    private AppClss clss;
+    protected AppClss clss;
 
-    private GlobalKeyListenerExample glklE;
-    private FileOperation fo;
+    protected GlobalKeyListenerExample glklE;
+    protected FileOperation fo;
 
-    public FileOperation getFileOperation() {
-        return fo;
-    }
-
-    public void setFileOperation(FileOperation fo) {
-        this.fo = fo;
-    }
-
-    private Integer keySt = null;
+    protected Integer keySt = null;
 
 
     private ToolsAction toolsAction;
     private JDesktopPane jdpDesktop;
 
-    private int keyinstr = 0;
+    protected int keyinstr = 0;
 
-    private PanelToolsEmulation panelToolsEmulation;
-    private PanelToolsFiltr panelToolsFiltr;
-    private PanelScreenshot panelScreenshot;
-    private PanelInfo panelInfo;
+    private PanelCreatePointWork panelToolsEmulation;
 
-    public Screen4() {
-        fo = new FileOperation();
+    protected PanelScreenshot panelScreenshot;
+    protected PanelInfo panelInfo;
+
+    public PoinBuilderFrame() {
+        super("Point Builder");
+
         getContentPane().setLayout(new BorderLayout());
 
         JPanel pWin = new JPanel(new BorderLayout());
@@ -139,14 +133,14 @@ public class Screen4 extends JFrame implements GlobalFrame {
         tools.setBorder(ON_BORDER);
         tools.setLayout(new BoxLayout(tools, BoxLayout.Y_AXIS));
 
-        panelToolsEmulation = new PanelToolsEmulation(this);
+        panelToolsEmulation = new PanelCreatePointWork(this);
         tools.add(panelToolsEmulation);
 
-        panelToolsFiltr = new PanelToolsFiltr(this);
-        tools.add(panelToolsFiltr);
-
-        panelScreenshot = new PanelScreenshot(this);
-        tools.add(panelScreenshot);
+//        panelToolsFiltr = new PanelToolsFiltr(this);
+//        tools.add(panelToolsFiltr);
+//
+//        panelScreenshot = new PanelScreenshot(this);
+//        tools.add(panelScreenshot);
 
         panelInfo = new PanelInfo(this);
         tools.add(panelInfo);
@@ -205,7 +199,7 @@ public class Screen4 extends JFrame implements GlobalFrame {
 
     }
 
-    public PanelToolsEmulation getPanelToolsEmulation() {
+    public PanelCreatePointWork getPanelToolsEmulation() {
         return panelToolsEmulation;
     }
 
@@ -240,7 +234,7 @@ public class Screen4 extends JFrame implements GlobalFrame {
     }
 
     private BufferedImage cI = null;
-    private ImagePanel curimg = null;
+    protected ImagePanel curimg = null;
     private int numFr = 0;
 
 
@@ -266,6 +260,8 @@ public class Screen4 extends JFrame implements GlobalFrame {
         numFr++;
         ImageFrame imF = new ImageFrame(this, numFr + "", cI);
         jdpDesktop.add(imF);
+
+
     }
 
     public void stopPoehali() {
@@ -279,16 +275,15 @@ public class Screen4 extends JFrame implements GlobalFrame {
         } catch (AWTException ex) {
             _log.error(ex.getMessage());
         }
+//        for(Filtr f: groupFiltr.getListFiltr()){
+//            f.isCorrect(cI);
+//        }
     }
 
-    public Set getPointColor() {
-        return pointColor;
-    }
-
+    @Override
     public void setPointColor(Set pointColor) {
         this.pointColor = pointColor;
     }
-
 
     @Override
     public void setCurimg(ImagePanel imagePanel) {
@@ -311,8 +306,13 @@ public class Screen4 extends JFrame implements GlobalFrame {
     }
 
     @Override
+    public Set getPointColor() {
+        return pointColor;
+    }
+
+    @Override
     public PanelToolsFiltr getPanelToolsFiltr() {
-        return panelToolsFiltr;
+        return null;
     }
 
     @Override
@@ -325,28 +325,47 @@ public class Screen4 extends JFrame implements GlobalFrame {
         return panelScreenshot;
     }
 
+    @Override
     public Integer getKeySt() {
         return keySt;
     }
 
+    @Override
     public void setKeySt(Integer keySt) {
         this.keySt = keySt;
     }
 
+    @Override
     public AppClss getClss() {
         return clss;
     }
 
+    @Override
     public void setClss(AppClss clss) {
         this.clss = clss;
     }
 
+    @Override
     public GlobalKeyListenerExample getGlklE() {
         return glklE;
     }
 
+    @Override
     public void setGlklE(GlobalKeyListenerExample glklE) {
         this.glklE = glklE;
+    }
+
+    @Override
+    public FileOperation getFileOperation() {
+        if(fo==null){
+            fo=new FileOperation();
+        }
+        return fo;
+    }
+
+    @Override
+    public void setFileOperation(FileOperation fo) {
+        this.fo = fo;
     }
 }
 
