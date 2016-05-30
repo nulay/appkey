@@ -14,17 +14,17 @@ public class Area implements Serializable {
     private Point endPoint;
 
 
-    Area(Integer bx, Integer by) {
+    public Area(Integer bx, Integer by) {
         this.beginPoint=new Point(bx,by);
     }
 
-    Area(Point beginPoint, Point endPoint) {
+    public Area(Point beginPoint, Point endPoint) {
         this.beginPoint=beginPoint;
         this.endPoint=endPoint;
         parsePoint();
     }
 
-    Area(Integer bx, Integer by, Integer ex, Integer ey) {
+    public Area(Integer bx, Integer by, Integer ex, Integer ey) {
         this.beginPoint=new Point(bx,by);
         this.endPoint=new Point(ex,ey);
         parsePoint();

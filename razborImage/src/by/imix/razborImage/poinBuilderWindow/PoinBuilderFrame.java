@@ -58,7 +58,9 @@ public class PoinBuilderFrame extends JFrame implements GlobalFrame {
         JPanel pWin = new JPanel(new BorderLayout());
 
         JButton but2Analiz = new JButton("Анализ");
-        JButton but3runBoy = new JButton("Начать бой");
+        but2Analiz.setToolTipText("Анализ");
+        JButton but3runBoy = new JButton("Начать проигрывание эмуляции");
+        but3runBoy.setToolTipText("Начать проигрывание эмуляции");
 
         but2Analiz.addActionListener(new ActionListener() {
             @Override
