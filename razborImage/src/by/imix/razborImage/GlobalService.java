@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Created by miha on 22.05.2016.
  */
-public interface GlobalFrame {
+public interface GlobalService {
     BevelBorder ON_BORDER = new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY,Color.GRAY);
     BevelBorder OFF_BORDER = new BevelBorder(BevelBorder.RAISED,Color.LIGHT_GRAY,Color.GRAY);
 
@@ -49,4 +49,6 @@ public interface GlobalFrame {
     void grabScreen();
 
     void startRazbor();
+
+    ToolsEmulation getToolEmulation();
 }

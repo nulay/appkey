@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
+ * Panel for work with image
  * User: miha
  * Date: 11.01.14
  * Time: 12:59

@@ -4,6 +4,7 @@ import by.imix.botTank.AppClss;
 import by.imix.keyReader.KeyPressed;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class Carta implements ComponentFiltrov, Serializable {
     private AppClss appClss=new AppClss();
 
     public Carta() {
-
+        listGroup=new ArrayList<GroupFiltr>();
     }
 
     public String getName() {

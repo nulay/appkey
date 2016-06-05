@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Created with IntelliJ IDEA.
+ * Class service for screen copy
  * User: miha
  * Date: 08.01.14
  * Time: 9:55

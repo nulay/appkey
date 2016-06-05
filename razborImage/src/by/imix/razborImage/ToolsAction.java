@@ -1,5 +1,7 @@
 package by.imix.razborImage;
 
+import by.imix.razborImage.algoritm.SearchImgInImg;
+import by.imix.razborImage.algoritm.Searther;
 import by.imix.razborImage.filters.ColorInRectFilter;
 import by.imix.razborImage.filters.FullConcurrenceRect;
 import by.imix.razborImage.pointWork.Area;
@@ -24,9 +26,9 @@ public class ToolsAction implements MouseListener, MouseMotionListener {
 
     private BufferedImage bi;
     private Point bound;
-    private GlobalFrame globalFrame;
+    private GlobalService globalFrame;
 
-    public ToolsAction(BufferedImage bi, GlobalFrame globalFrame) {
+    public ToolsAction(BufferedImage bi, GlobalService globalFrame) {
         this.bi = bi;
         this.globalFrame=globalFrame;
     }
@@ -52,6 +54,10 @@ public class ToolsAction implements MouseListener, MouseMotionListener {
             FullConcurrenceRect fcr=new FullConcurrenceRect(mr,r);
             globalFrame.getPanelToolsFiltr().addComponentFiltr(fcr);
             bound=null;
+//            SearchImgInImg searther=new SearchImgInImg();
+
+            SearchImgInImg.MatrixPosition mp=SearchImgInImg.matrixMatchBI(bi,r);
+            System.out.println(mp);
 //                jlp.repaint();
         }
         if(globalFrame.getKeyinstr()==3){

@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Vector;
 
 /**
- * Created with IntelliJ IDEA.
+ * Panel for filters
  * User: miha
  * Date: 13.01.14
  * Time: 13:05
@@ -30,7 +30,7 @@ import java.util.Vector;
  */
 public class PanelToolsFiltr extends JToolBar implements ActionListener{
     private Logger _log=Logger.getLogger(PanelToolsFiltr.class);
-    private GlobalFrame screen4;
+    private GlobalService screen4;
 
     private JButton but1createCarta;
     private JButton but2createGroup;
@@ -53,7 +53,7 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
     private JFileChooser saverFileFiltr;
     private JFileChooser openerFile;
 
-    public PanelToolsFiltr(GlobalFrame screen4) {
+    public PanelToolsFiltr(GlobalService screen4) {
         super("p2",JToolBar.VERTICAL);
 //        setLayout();
         setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -63,6 +63,7 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
         rPanel.setLayout(new BoxLayout(rPanel,BoxLayout.Y_AXIS));
 
         but10OnRectObl=new JButton(new ImageIcon("images/select.png"));
+        but10OnRectObl.setToolTipText("Select");
         but10OnRectObl.setName("but10OnRectObl");
         but10OnRectObl.setBorder(screen4.OFF_BORDER);
         but10OnRectObl.setEnabled(false);
@@ -71,11 +72,13 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
         but11createFColor.setName("but11createFColor");
         but11createFColor.setBorder(screen4.OFF_BORDER);
         but11createFColor.setEnabled(false);
+        but11createFColor.setToolTipText("Create color");
 
         but12saveFiltr=new JButton(new ImageIcon("images/save.png"));
         but12saveFiltr.setName("but12saveFiltr");
         but12saveFiltr.setBorder(screen4.OFF_BORDER);
         but12saveFiltr.setEnabled(false);
+        but12saveFiltr.setToolTipText("Save filter");
 
         but1createCarta=new JButton(new ImageIcon("images/map.png"));
         but1createCarta.setName("but1createCarta");
@@ -84,25 +87,30 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
         but2createGroup.setName("but2createGroup");
         but2createGroup.setBorder(screen4.OFF_BORDER);
         but2createGroup.setEnabled(false);
+        but2createGroup.setToolTipText("Create group");
 
         but12openCart=new JButton(new ImageIcon("images/folder.png"));
         but12openCart.setName("but12openCart");
         but12openCart.setBorder(screen4.OFF_BORDER);
+        but12openCart.setToolTipText("Open cart");
 
 
         but13delete=new JButton(new ImageIcon("images/rem.png"));
         but13delete.setName("but13delete");
         but13delete.setBorder(screen4.OFF_BORDER);
         but13delete.setEnabled(false);
+        but13delete.setToolTipText("Remove");
 
         butedit=new JButton(new ImageIcon("images/redact.png"));
         butedit.setName("butedit");
         butedit.setBorder(screen4.OFF_BORDER);
+        butedit.setToolTipText("Edit");
 
         but14play=new JButton(new ImageIcon("images/play.png"));
         but14play.setName("but14play");
         but14play.setBorder(screen4.OFF_BORDER);
         but14play.setEnabled(false);
+        but13delete.setToolTipText("Play");
 
         setMinimumSize(new Dimension(220, 170));
         setMaximumSize(new Dimension(220, 170));
@@ -329,6 +337,13 @@ public class PanelToolsFiltr extends JToolBar implements ActionListener{
         DefaultMutableTreeNode dmtn= (DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
         DefaultMutableTreeNode dmn=new DefaultMutableTreeNode(fcr);
 
+        if(dmtn==null){
+            JOptionPane.showMessageDialog(this,
+                    "Not select root node.",
+                    "Warning error",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int[] childIndices = new int[1];
         childIndices[0] = dmtn.getChildCount();
         dmtn.insert(dmn, dmtn.getChildCount());

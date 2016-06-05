@@ -1,7 +1,7 @@
 package by.imix.razborImage.filters.dialogFilter;
 
 import by.imix.keyReader.ObKeyPressed;
-import by.imix.razborImage.Screen4;
+import by.imix.razborImage.GlobalService;
 import by.imix.razborImage.filters.FullConcurrenceRect;
 
 import javax.swing.*;
@@ -85,7 +85,7 @@ public class DialogFullConcurrenceRect extends JPanel{
         JPanel pEl2=new JPanel(new FlowLayout(FlowLayout.LEFT));
         final Vector vokp=new Vector();
         vokp.add("<Без действия>");
-        vokp.addAll(((Screen4)df.getOwner()).getPanelToolsEmulation().getAllObjEmulation());
+        vokp.addAll(((GlobalService)df.getOwner()).getToolEmulation().getAllObjEmulation());
 
 
         final JComboBox cb=new JComboBox(vokp);

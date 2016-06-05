@@ -1,13 +1,5 @@
 package by.imix.razborImage;
 
-/**
- * Created with IntelliJ IDEA.
- * User: miha
- * Date: 31.12.13
- * Time: 12:55
- * To change this template use File | Settings | File Templates.
- */
-
 import by.imix.botTank.AppClss;
 import by.imix.botTank.Poehali;
 import by.imix.keyReader.GlobalKeyListenerExample;
@@ -22,9 +14,13 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * @author mutagen
+ * Root Screen Frame for work with record and replay battle
+ * User: miha
+ * Date: 31.12.13
+ * Time: 12:55
+ * To change this template use File | Settings | File Templates.
  */
-public class Screen4 extends JFrame implements GlobalFrame {
+public class Screen4 extends JFrame implements GlobalService {
     private Logger _log = Logger.getLogger(Screen4.class);
 
     private java.util.Set pointColor;
@@ -63,8 +59,10 @@ public class Screen4 extends JFrame implements GlobalFrame {
 
         JPanel pWin = new JPanel(new BorderLayout());
 
-        JButton but2Analiz = new JButton("Анализ");
-        JButton but3runBoy = new JButton("Начать бой");
+        JButton but2Analiz = new JButton("Analizing");
+        but2Analiz.setToolTipText("Analizing");
+        JButton but3runBoy = new JButton("Start battle");
+        but3runBoy.setToolTipText("Start battle");
 
         but2Analiz.addActionListener(new ActionListener() {
             @Override
@@ -82,7 +80,7 @@ public class Screen4 extends JFrame implements GlobalFrame {
                 }
                 curimg.redrawImg(cI);
                 JDialog dialog = new JDialog();
-                dialog.add(new JLabel("Найдено " + num + " совпадений"));
+                dialog.add(new JLabel("Find " + num + " mach"));
                 dialog.pack();
                 dialog.setVisible(true);
 
@@ -108,7 +106,7 @@ public class Screen4 extends JFrame implements GlobalFrame {
 
                         Poehali poeh = new Poehali(keyV, 150L);
                         poeh.start();
-                        _log.info("поворот");
+                        _log.info("turn");
 
                         try {
                             Robot robot = new Robot();
@@ -121,13 +119,13 @@ public class Screen4 extends JFrame implements GlobalFrame {
                             p = listO.get(0);
                             if (p.getX() < cI.getWidth() / 2) {
                                 key = false;
-                                _log.info("Танк повернулся");
+                                _log.info("Tank turn");
                                 poeh = new Poehali(KeyEvent.VK_SPACE, 100L);
                                 poeh.start();
                             }
                         } else {
                             key = false;
-                            _log.info("Не удалось найти такой цвет");
+                            _log.info("Don`t found color");
 
                         }
                     }
@@ -201,11 +199,13 @@ public class Screen4 extends JFrame implements GlobalFrame {
         pWin.add(jdpDesktop, BorderLayout.CENTER);
         // Make dragging faster by setting drag mode to Outline
         jdpDesktop.putClientProperty("JDesktopPane.dragMode", "outline");
+        this.setTitle("Screen4");
 //        grabScreen();
 
     }
 
-    public PanelToolsEmulation getPanelToolsEmulation() {
+
+    public PanelToolsEmulation getToolEmulation() {
         return panelToolsEmulation;
     }
 

@@ -9,7 +9,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import java.awt.event.KeyEvent;
 
 /**
- * Created with IntelliJ IDEA.
+ * Class for capture image Capture key = F
  * User: Ирина
  * Date: 13.01.14
  * Time: 0:07

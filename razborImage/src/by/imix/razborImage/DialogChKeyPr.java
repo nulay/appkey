@@ -109,7 +109,7 @@ public class DialogChKeyPr extends JDialog{
                 }
                 obKeyPressed.setListKP(lkp);
                 DialogChKeyPr.this.setVisible(false);
-                ((Screen4)DialogChKeyPr.this.getOwner()).getPanelToolsEmulation().saveObKeyPressed(obKeyPressed);
+                ((Screen4)DialogChKeyPr.this.getOwner()).getToolEmulation().saveObKeyPressed(obKeyPressed);
             }
         });
         p2.add(bOk);

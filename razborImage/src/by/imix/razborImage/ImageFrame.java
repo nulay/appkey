@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Created with IntelliJ IDEA.
+ * Frame work with images
  * User: miha
  * Date: 14.01.14
  * Time: 12:07
@@ -17,9 +17,9 @@ public class ImageFrame extends JInternalFrame implements InternalFrameListener 
    
     private ImagePanel img;
     private ToolsAction toolsAction;
-    private GlobalFrame globalFrame;
+    private GlobalService globalFrame;
 
-    public ImageFrame(GlobalFrame globalFrame, String numFr, BufferedImage cI) {
+    public ImageFrame(GlobalService globalFrame, String numFr, BufferedImage cI) {
         super("Win#"+numFr,true,true,true);
         
         this.globalFrame=globalFrame;

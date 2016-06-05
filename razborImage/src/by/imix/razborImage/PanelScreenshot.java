@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 /**
- * Created with IntelliJ IDEA.
+ * Panel for capture screen
  * User: miha
  * Date: 13.01.14
  * Time: 16:02
@@ -31,7 +31,7 @@ import java.util.Vector;
 public class PanelScreenshot extends JToolBar implements FocusListener, ActionListener, EventStop {
     private Logger _log=Logger.getLogger(PanelScreenshot.class);
     
-    GlobalFrame globalFrame;
+    GlobalService globalFrame;
     private JList listScr;
 
     private Vector<ImageFrame> jifList;
@@ -49,7 +49,7 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
 
     private KeyRazbor ks;
 
-    public PanelScreenshot(GlobalFrame globalFrame) {
+    public PanelScreenshot(GlobalService globalFrame) {
         super("p3",JToolBar.VERTICAL);
         setAlignmentX(Component.LEFT_ALIGNMENT);       
         this.globalFrame=globalFrame;
@@ -90,17 +90,22 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
         but1HandZahvat=new JButton(new ImageIcon("images/play.png"));
         but1HandZahvat.setName("but1HandZahvat");
         but1HandZahvat.setBorder(globalFrame.OFF_BORDER);
+        but1HandZahvat.setToolTipText("Auto capture");
         but2AutoZahvat=new JButton(new ImageIcon("images/play.png"));
         but2AutoZahvat.setName("but2AutoZahvat");
+        but2AutoZahvat.setToolTipText("Capture screen");
         but2AutoZahvat.setBorder(globalFrame.OFF_BORDER);
         but3SaveScreen=new JButton(new ImageIcon("images/save.png"));
+        but3SaveScreen.setToolTipText("Save screen");
         but3SaveScreen.setName("but3SaveScreen");
         but3SaveScreen.setBorder(globalFrame.OFF_BORDER);
         but4openScreen=new JButton(new ImageIcon("images/folder.png"));
         but4openScreen.setName("but4openScreen");
         but4openScreen.setBorder(globalFrame.OFF_BORDER);
+        but4openScreen.setToolTipText("openScreen");
 
         test=new JButton(new ImageIcon("images/play.png"));
+        test.setToolTipText("TestButton");
         test.setName("test");
         test.setBorder(globalFrame.OFF_BORDER);
 
@@ -209,7 +214,7 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
             if(globalFrame.getKeySt()==null){
                 ks = new KeyRazbor(this);
                 but1HandZahvat.setBorder(globalFrame.ON_BORDER);
-                globalFrame.setKeySt(GlobalFrame.ZAHVAT);
+                globalFrame.setKeySt(GlobalService.ZAHVAT);
             }else{
                 if(globalFrame.getKeySt()== Screen4.ZAHVAT){
                     ks.unregisterNativeHook();

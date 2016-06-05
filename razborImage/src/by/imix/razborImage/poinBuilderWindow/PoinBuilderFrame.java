@@ -1,7 +1,7 @@
 package by.imix.razborImage.poinBuilderWindow;
 
 /**
- * Created with IntelliJ IDEA.
+ * Point Builder Frame
  * User: miha
  * Date: 31.12.13
  * Time: 12:55
@@ -9,7 +9,6 @@ package by.imix.razborImage.poinBuilderWindow;
  */
 
 import by.imix.botTank.AppClss;
-import by.imix.botTank.Poehali;
 import by.imix.keyReader.GlobalKeyListenerExample;
 import by.imix.keyReader.KeyRazbor;
 import by.imix.razborImage.*;
@@ -25,7 +24,7 @@ import java.util.Set;
 /**
  * @author mutagen
  */
-public class PoinBuilderFrame extends JFrame implements GlobalFrame {
+public class PoinBuilderFrame extends JFrame implements GlobalService {
     private Logger _log = Logger.getLogger(PoinBuilderFrame.class);
 
     private Set pointColor;
@@ -45,104 +44,39 @@ public class PoinBuilderFrame extends JFrame implements GlobalFrame {
 
     protected int keyinstr = 0;
 
-    private PanelCreatePointWork panelToolsEmulation;
+    private PanelCreatePointWork panelCreatePointWork;
+
+    private PanelToolsEmulation panelToolsEmulation;
 
     protected PanelScreenshot panelScreenshot;
+    private PanelToolsFiltr panelToolsFiltr;
+
     protected PanelInfo panelInfo;
 
     public PoinBuilderFrame() {
         super("Point Builder");
-
+//        setType(javax.swing.JFrame.Type.UTILITY);
+        setName("Point Builder");
         getContentPane().setLayout(new BorderLayout());
 
         JPanel pWin = new JPanel(new BorderLayout());
-
-        JButton but2Analiz = new JButton("Анализ");
-        but2Analiz.setToolTipText("Анализ");
-        JButton but3runBoy = new JButton("Начать проигрывание эмуляции");
-        but3runBoy.setToolTipText("Начать проигрывание эмуляции");
-
-        but2Analiz.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int num = 0;
-                for (int x = 0; x < cI.getWidth(); x++) {
-                    for (int y = 0; y < cI.getHeight(); y++) {
-                        int[] rgb = cI.getRaster().getPixel(x, y, new int[3]);
-                        if (issueColor(rgb)) {
-                            curimg.drawKrest(x, y);
-                            listO.add(new Point(x, y));
-                            num += 1;
-                        }
-                    }
-                }
-                curimg.redrawImg(cI);
-                JDialog dialog = new JDialog();
-                dialog.add(new JLabel("Найдено " + num + " совпадений"));
-                dialog.pack();
-                dialog.setVisible(true);
-
-            }
-        });
-
-        but3runBoy.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Thread.sleep(4000);
-                } catch (InterruptedException e1) {
-
-                }
-                if (listO.size() != 0) {
-                    Point p = listO.get(0);
-                    Integer keyV = KeyEvent.VK_X;
-                    if (p.getX() < cI.getWidth() / 2) {
-                        keyV = KeyEvent.VK_Z;
-                    }
-                    boolean key = true;
-                    while (key) {
-
-                        Poehali poeh = new Poehali(keyV, 150L);
-                        poeh.start();
-                        _log.info("поворот");
-
-                        try {
-                            Robot robot = new Robot();
-                            cI = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-                        } catch (AWTException ex) {
-                        }
-
-                        searthPoint();
-                        if (listO.size() > 0) {
-                            p = listO.get(0);
-                            if (p.getX() < cI.getWidth() / 2) {
-                                key = false;
-                                _log.info("Танк повернулся");
-                                poeh = new Poehali(KeyEvent.VK_SPACE, 100L);
-                                poeh.start();
-                            }
-                        } else {
-                            key = false;
-                            _log.info("Не удалось найти такой цвет");
-
-                        }
-                    }
-                }
-            }
-        });
 
         JPanel tools = new JPanel();
         tools.setBorder(ON_BORDER);
         tools.setLayout(new BoxLayout(tools, BoxLayout.Y_AXIS));
 
-        panelToolsEmulation = new PanelCreatePointWork(this);
-        tools.add(panelToolsEmulation);
+        panelCreatePointWork = new PanelCreatePointWork(this);
+        tools.add(panelCreatePointWork);
 
-//        panelToolsFiltr = new PanelToolsFiltr(this);
-//        tools.add(panelToolsFiltr);
-//
-//        panelScreenshot = new PanelScreenshot(this);
-//        tools.add(panelScreenshot);
+//        panelToolsEmulation = new PanelToolsEmulation(this);
+//        tools.add(panelToolsEmulation);
+
+
+        panelToolsFiltr = new PanelToolsFiltr(this);
+        tools.add(panelToolsFiltr);
+
+        panelScreenshot = new PanelScreenshot(this);
+        tools.add(panelScreenshot);
 
         panelInfo = new PanelInfo(this);
         tools.add(panelInfo);
@@ -186,7 +120,7 @@ public class PoinBuilderFrame extends JFrame implements GlobalFrame {
         });
 
 //        f.pack();
-        setSize(1040, 480);
+        setSize(1040, 780);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -197,12 +131,13 @@ public class PoinBuilderFrame extends JFrame implements GlobalFrame {
         pWin.add(jdpDesktop, BorderLayout.CENTER);
         // Make dragging faster by setting drag mode to Outline
         jdpDesktop.putClientProperty("JDesktopPane.dragMode", "outline");
+        this.setTitle("Poin Builder");
 //        grabScreen();
 
     }
 
-    public PanelCreatePointWork getPanelToolsEmulation() {
-        return panelToolsEmulation;
+    public ToolsEmulation getToolEmulation() {
+        return panelCreatePointWork;
     }
 
     public void searthPoint() {
@@ -232,7 +167,7 @@ public class PoinBuilderFrame extends JFrame implements GlobalFrame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Screen4();
+        new PoinBuilderFrame();
     }
 
     private BufferedImage cI = null;
@@ -314,7 +249,7 @@ public class PoinBuilderFrame extends JFrame implements GlobalFrame {
 
     @Override
     public PanelToolsFiltr getPanelToolsFiltr() {
-        return null;
+        return panelToolsFiltr;
     }
 
     @Override

@@ -86,7 +86,7 @@ public class DialogColorInRectFilter extends JPanel{
         JPanel pEl2=new JPanel(new FlowLayout(FlowLayout.LEFT));
         final Vector vokp=new Vector();
         vokp.add("<Без действия>");
-        vokp.addAll(((Screen4)df.getOwner()).getPanelToolsEmulation().getAllObjEmulation());
+        vokp.addAll(((Screen4)df.getOwner()).getToolEmulation().getAllObjEmulation());
 
 
         final JComboBox cb=new JComboBox(vokp);

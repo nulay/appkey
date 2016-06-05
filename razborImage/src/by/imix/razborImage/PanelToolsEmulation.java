@@ -24,9 +24,9 @@ import java.util.Vector;
  * Time: 11:53
  * To change this template use File | Settings | File Templates.
  */
-public class PanelToolsEmulation extends JToolBar implements FocusListener, ActionListener, EventStopGKL {
+public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, FocusListener, ActionListener, EventStopGKL {
     private Logger _log = Logger.getLogger(PanelToolsEmulation.class);
-    private GlobalFrame screen4;
+    private GlobalService screen4;
 
     private JFileChooser openerFile;
     private JFileChooser saverFileemulation;
@@ -45,7 +45,7 @@ public class PanelToolsEmulation extends JToolBar implements FocusListener, Acti
 
     private DialogChKeyPr dialogCrEm;
 
-    public PanelToolsEmulation(GlobalFrame screen4) {
+    public PanelToolsEmulation(GlobalService screen4) {
         super("p1", JToolBar.VERTICAL);
         setAlignmentX(Component.LEFT_ALIGNMENT);
         this.screen4 = screen4;
@@ -186,7 +186,7 @@ public class PanelToolsEmulation extends JToolBar implements FocusListener, Acti
                 });
                 th.start();
                 dialog.setVisible(true);
-                screen4.setKeySt(GlobalFrame.PLAY);
+                screen4.setKeySt(GlobalService.PLAY);
                 but7Stop.setEnabled(true);
                 hideEmButton();
             }
@@ -225,7 +225,7 @@ public class PanelToolsEmulation extends JToolBar implements FocusListener, Acti
                 th.start();
                 dialog.setVisible(true);
                 but7Stop.setEnabled(true);
-                screen4.setKeySt(GlobalFrame.REC);
+                screen4.setKeySt(GlobalService.REC);
                 listObj.removeSelectionInterval(0, listObj.getSelectedIndex());
                 hideEmButton();
             }

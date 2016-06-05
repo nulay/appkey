@@ -5,7 +5,8 @@ import by.imix.keyReader.EventStopGKL;
 import by.imix.keyReader.GlobalKeyListenerExample;
 import by.imix.keyReader.ObKeyPressed;
 import by.imix.razborImage.DialogChKeyPr;
-import by.imix.razborImage.GlobalFrame;
+import by.imix.razborImage.GlobalService;
+import by.imix.razborImage.ToolsEmulation;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -16,15 +17,16 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Collection;
 import java.util.Vector;
 
 /**
  * Created by miha on 22.05.2016.
  */
-public class PanelCreatePointWork extends JToolBar implements FocusListener, ActionListener, EventStopGKL {
+public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, FocusListener, ActionListener, EventStopGKL {
     private Logger _log=Logger.getLogger(PanelCreatePointWork.class);
 
-    private GlobalFrame globalFrame;
+    private GlobalService globalFrame;
 
     private JFileChooser openerFile;
     private JFileChooser saverFileemulation;
@@ -43,7 +45,7 @@ public class PanelCreatePointWork extends JToolBar implements FocusListener, Act
 
     private DialogChKeyPr dialogCrEm;
 
-    public PanelCreatePointWork(GlobalFrame globalFrame) {
+    public PanelCreatePointWork(GlobalService globalFrame) {
         super("p1",JToolBar.VERTICAL);
         setAlignmentX(Component.LEFT_ALIGNMENT);
      
@@ -59,7 +61,7 @@ public class PanelCreatePointWork extends JToolBar implements FocusListener, Act
 
         // listObPan.setBorder(OFF_BORDER);
 
-        JLabel lab=new JLabel(" Список эмуляций");
+        JLabel lab=new JLabel(" Работа со скриншотами");
         setAlignmentX(Component.LEFT_ALIGNMENT);
         rPanel.add(lab);
 
@@ -77,24 +79,30 @@ public class PanelCreatePointWork extends JToolBar implements FocusListener, Act
         rPanel.add(new JScrollPane(listObj,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
 
         but4Play =new JButton(new ImageIcon("images/play.png"));//проигрывание
+        but4Play.setToolTipText("Play");
         but4Play.setName("but4Play");
         but4Play.setEnabled(false);
         but4Play.setBorder(globalFrame.OFF_BORDER);
         but5Rec =new JButton(new ImageIcon("images/rec.png"));//запись
+        but5Rec.setToolTipText("Records");
         but5Rec.setName("but5Rec");
         but5Rec.setBorder(globalFrame.OFF_BORDER);
         but6Folder=new JButton(new ImageIcon("images/folder.png"));
+        but6Folder.setToolTipText("Save");
         but6Folder.setName("but6Folder");
         but6Folder.setBorder(globalFrame.OFF_BORDER);
         but7Stop=new JButton(new ImageIcon("images/stop.png"));//стоп
+        but7Stop.setToolTipText("Stop");
         but7Stop.setName("but7Stop");
         but7Stop.setEnabled(false);
         but7Stop.setBorder(globalFrame.OFF_BORDER);
         but8Correct=new JButton(new ImageIcon("images/redact.png"));
+        but8Correct.setToolTipText("Redact");
         but8Correct.setName("but8Correct");
         but8Correct.setBorder(globalFrame.OFF_BORDER);
         but8Correct.setEnabled(false);
         but9delete=new JButton(new ImageIcon("images/delete.png"));
+        but9delete.setToolTipText("Remove");
         but9delete.setName("but9delete");
         but9delete.setBorder(globalFrame.OFF_BORDER);
         but9delete.setEnabled(false);
@@ -185,7 +193,7 @@ public class PanelCreatePointWork extends JToolBar implements FocusListener, Act
                 });
                 th.start();
                 dialog.setVisible(true);
-                globalFrame.setKeySt(GlobalFrame.PLAY);
+                globalFrame.setKeySt(GlobalService.PLAY);
                 but7Stop.setEnabled(true);
                 hideEmButton();
             }
@@ -224,7 +232,7 @@ public class PanelCreatePointWork extends JToolBar implements FocusListener, Act
                 th.start();
                 dialog.setVisible(true);
                 but7Stop.setEnabled(true);
-                globalFrame.setKeySt(GlobalFrame.REC);
+                globalFrame.setKeySt(GlobalService.REC);
                 listObj.removeSelectionInterval(0,listObj.getSelectedIndex());
                 hideEmButton();
             }
@@ -319,4 +327,8 @@ public class PanelCreatePointWork extends JToolBar implements FocusListener, Act
     }
 
 
+    @Override
+    public Collection getAllObjEmulation() {
+        return new Vector();
+    }
 }

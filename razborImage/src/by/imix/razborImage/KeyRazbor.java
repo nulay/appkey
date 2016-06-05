@@ -17,8 +17,8 @@ import java.awt.event.KeyEvent;
  */
 public class KeyRazbor implements NativeKeyListener {
     private Logger _log=Logger.getLogger(KeyRazbor.class);
-    private GlobalFrame screen4;
-    public KeyRazbor(GlobalFrame screen4) {
+    private GlobalService screen4;
+    public KeyRazbor(GlobalService screen4) {
         this.screen4=screen4;
         try {
             GlobalScreen.registerNativeHook();

@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created with IntelliJ IDEA.
+ * Dialog setting of filter
  * User: Ирина
  * Date: 16.01.14
  * Time: 1:29
