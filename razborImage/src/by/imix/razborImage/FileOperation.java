@@ -1,6 +1,7 @@
 package by.imix.razborImage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
@@ -12,7 +13,7 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class FileOperation {
-    private Logger _log=Logger.getLogger(FileOperation.class);
+    private static final Logger _log = LoggerFactory.getLogger(FileOperation.class);
 
     public FileOperation() {
     }

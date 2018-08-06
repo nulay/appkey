@@ -1,5 +1,8 @@
 package by.imix.razborImage.algoritm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -8,6 +11,7 @@ import java.io.FileInputStream;
  * Created by miha on 01.06.2016.
  */
 public class SearchImgInImg {
+    private static final Logger _log = LoggerFactory.getLogger(SearchImgInImg.class);
 //    public static String bigBmp = "examples/9.bmp";
 //    public static String[] smallBmp = {"Cs/Ac.bmp", "Cs/Kc.bmp", "Cs/Qc.bmp", "Cs/Jc.bmp", "Cs/Tc.bmp", "Cs/9c.bmp"
 //            , "Cs/8c.bmp", "Cs/7c.bmp", "Cs/6c.bmp", "Cs/5c.bmp", "Cs/4c.bmp", "Cs/3c.bmp", "Cs/2c.bmp"};
@@ -65,7 +69,7 @@ public class SearchImgInImg {
                 MatrixPosition result = new MatrixPosition();
                 result.line = i;
                 result.column = j;
-                //System.out.println("Matching at line=" + result.line + ", column=" + result.column);
+                //_log.debug("Matching at line=" + result.line + ", column=" + result.column);
                 return result;
             }
         }
@@ -75,10 +79,10 @@ public class SearchImgInImg {
     public static void main(String[] args) {
 //        for (int x = 0; x < 13; x++) {
 //            if (match == null) {
-//                System.out.println("No Match Found!");
+//                _log.debug("No Match Found!");
 //                count++;
 //            } else {
-//                System.out.println("Matching at column(x)=" + match.column + " and line(y)=" + match.line);
+//                _log.debug("Matching at column(x)=" + match.column + " and line(y)=" + match.line);
 //                count++;
 //            }
 //        }
@@ -164,7 +168,7 @@ public class SearchImgInImg {
                     nindex += npad;
                 }
             } catch (Exception e) {
-                System.out.println("Caught exception in loadbitmap!");
+                _log.debug("Caught exception in loadbitmap!");
                 System.exit(3);
             }
         }

@@ -9,16 +9,17 @@ package by.imix.keyReader;
  * To change this template use File | Settings | File Templates.
  */
 
-import org.apache.log4j.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class GlobalKeyListenerExample implements NativeKeyListener {
-    private Logger _log= Logger.getLogger(GlobalKeyListenerExample.class);
+    private static final Logger _log = LoggerFactory.getLogger(GlobalKeyListenerExample.class);
     private Date startDate;
     private List<KeyPressed> lkp=new ArrayList<KeyPressed>();
     private List<KeyPressed> listkr=new ArrayList<KeyPressed>();
@@ -32,7 +33,7 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
 //    }
 //
 //    private void info(Object s) {
-//        System.out.println(s);
+//        _log.debug(s);
 //    }
 
 
@@ -56,7 +57,7 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
                 _log.error(ex.getMessage());
             }
             //Construct the example object and initialze native hook.
-            GlobalScreen.getInstance().addNativeKeyListener(this);
+            GlobalScreen.addNativeKeyListener(this);
             keyRun=true;
         }
     }
@@ -64,7 +65,7 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
 
 
     public void nativeKeyPressed(NativeKeyEvent e) {
-        if (e.getKeyCode() == NativeKeyEvent.VK_ESCAPE) {
+        if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
             stopKeyLovec();
         }
         _log.info("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
@@ -130,11 +131,15 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
             }
         });
         for(KeyPressed kpr:listkr){
-            _log.info(kpr);
+            _log.info(kpr.toString());
 //                kpr.setRelessed(kpr.getPressed()+10);
         }
         _log.info("Размер списка "+lkp.size());
-        GlobalScreen.unregisterNativeHook();
+        try {
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+        }
         keyRun=false;
         if(es!=null){
             es.fireStopped(this);

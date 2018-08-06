@@ -2,6 +2,8 @@ package by.imix.razborImage.filters;
 
 import by.imix.keyReader.ObKeyPressed;
 import by.imix.razborImage.pointWork.Area;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
@@ -14,7 +16,7 @@ import java.io.Serializable;
  * To change this template use File | Settings | File Templates.
  */
 public class FullConcurrenceRect implements Filtr, Serializable{
-//    private Logger _log=Logger.getLogger(FullConcurrenceRect.class);
+    private static final Logger _log = LoggerFactory.getLogger(FullConcurrenceRect.class);
     private Area rect;
     // private BufferedImage rectImage;
     private String name;

@@ -1,6 +1,5 @@
 package by.imix.razborImage;
 
-import by.imix.botTank.AppClss;
 import by.imix.keyReader.GlobalKeyListenerExample;
 
 import javax.swing.border.BevelBorder;

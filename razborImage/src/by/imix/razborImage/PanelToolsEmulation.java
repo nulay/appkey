@@ -1,10 +1,10 @@
 package by.imix.razborImage;
 
-import by.imix.botTank.AppClss;
 import by.imix.keyReader.EventStopGKL;
 import by.imix.keyReader.GlobalKeyListenerExample;
 import by.imix.keyReader.ObKeyPressed;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -25,7 +25,7 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, FocusListener, ActionListener, EventStopGKL {
-    private Logger _log = Logger.getLogger(PanelToolsEmulation.class);
+    private static final Logger _log = LoggerFactory.getLogger(PanelToolsEmulation.class);
     private GlobalService screen4;
 
     private JFileChooser openerFile;
@@ -64,7 +64,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
         setAlignmentX(Component.LEFT_ALIGNMENT);
         rPanel.add(lab);
 
-//        l=new Vector();
+//        l=new VectorremindEvent();
         l2 = new Vector<ObKeyPressed>();
         l3 = new Vector<File>();
 
@@ -287,7 +287,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
         if (((JButton) e.getSource()).getName().equals("but9delete")) {
             int res = JOptionPane.showConfirmDialog((Component) screen4, "Вы уверены что хотите удалить Эмуляцию?", "Удаление эмуляции", JOptionPane.YES_NO_OPTION);
             if (res == JOptionPane.YES_OPTION) {
-                //System.out.println();
+                //_log.debug();
                 if (l3.get(listObj.getSelectedIndex()).delete()) {
                     l3.remove(listObj.getSelectedIndex());
 //                    l.remove(listObj.getSelectedIndex());

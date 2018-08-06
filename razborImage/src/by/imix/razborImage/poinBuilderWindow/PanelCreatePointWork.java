@@ -1,13 +1,14 @@
 package by.imix.razborImage.poinBuilderWindow;
 
-import by.imix.botTank.AppClss;
 import by.imix.keyReader.EventStopGKL;
 import by.imix.keyReader.GlobalKeyListenerExample;
 import by.imix.keyReader.ObKeyPressed;
+import by.imix.razborImage.AppClss;
 import by.imix.razborImage.DialogChKeyPr;
 import by.imix.razborImage.GlobalService;
 import by.imix.razborImage.ToolsEmulation;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,7 @@ import java.util.Vector;
  * Created by miha on 22.05.2016.
  */
 public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, FocusListener, ActionListener, EventStopGKL {
-    private Logger _log=Logger.getLogger(PanelCreatePointWork.class);
+    private static final Logger _log = LoggerFactory.getLogger(PanelCreatePointWork.class);
 
     private GlobalService globalFrame;
 
@@ -294,7 +295,7 @@ public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, Fo
         if(((JButton)e.getSource()).getName().equals("but9delete")){
             int res=JOptionPane.showConfirmDialog((Component) globalFrame,"Вы уверены что хотите удалить Эмуляцию?","Удаление эмуляции",JOptionPane.YES_NO_OPTION);
             if(res==JOptionPane.YES_OPTION){
-                //System.out.println();
+                //_log.debug();
                 if(l3.get(listObj.getSelectedIndex()).delete()){
                     l3.remove(listObj.getSelectedIndex());
 //                    l.remove(listObj.getSelectedIndex());

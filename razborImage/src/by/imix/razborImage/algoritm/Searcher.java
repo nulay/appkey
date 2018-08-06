@@ -1,6 +1,7 @@
 package by.imix.razborImage.algoritm;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -12,8 +13,8 @@ import java.util.List;
  * Time: 14:13
  * To change this template use File | Settings | File Templates.
  */
-public class Searther {
-    private Logger _log=Logger.getLogger(Searther.class);
+public class Searcher {
+    private static final Logger _log = LoggerFactory.getLogger(Searcher.class);
     private List seartherObject;//разыскиваемые объекты
 
     public void equilsTwoOb(BufferedImage bi1,BufferedImage bi2){

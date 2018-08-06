@@ -1,6 +1,7 @@
 package by.imix.razborImage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,7 +14,7 @@ import java.awt.image.BufferedImage;
  * To change this template use File | Settings | File Templates.
  */
 public class ScreanCopyr {
-    private Logger _log=Logger.getLogger(Screen4.class);
+    private static final Logger _log = LoggerFactory.getLogger(Screen4.class);
     private int countCopy=10;
     private Long timeNextCopy=3000L;
     private BufferedImages bufferedImages;

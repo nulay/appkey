@@ -1,7 +1,7 @@
 package by.imix.razborImage.filters;
 
-import by.imix.botTank.AppClss;
 import by.imix.keyReader.KeyPressed;
+import by.imix.razborImage.AppClss;
 
 import java.io.Serializable;
 import java.util.ArrayList;

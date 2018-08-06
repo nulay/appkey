@@ -2,8 +2,9 @@ package by.imix.razborImage;
 
 import by.imix.keyReader.EventStop;
 import by.imix.keyReader.KeyRazbor;
-import by.imix.razborImage.algoritm.Searther;
-import org.apache.log4j.Logger;
+import by.imix.razborImage.algoritm.Searcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,7 +30,7 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 public class PanelScreenshot extends JToolBar implements FocusListener, ActionListener, EventStop {
-    private Logger _log=Logger.getLogger(PanelScreenshot.class);
+    private static final Logger _log = LoggerFactory.getLogger(PanelScreenshot.class);
     
     GlobalService globalFrame;
     private JList listScr;
@@ -112,7 +113,7 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
         test.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Searther sea=new Searther();
+                Searcher sea=new Searcher();
                 sea.equilsTwoOb(jifList.get(0).getImgPanel().getImage(),jifList.get(1).getImgPanel().getImage());
             }
         });

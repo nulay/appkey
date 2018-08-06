@@ -1,6 +1,7 @@
 package by.imix.razborImage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class PanelInfo extends JToolBar {
-    private Logger _log=Logger.getLogger(PanelInfo.class);
+    private static final Logger _log = LoggerFactory.getLogger(PanelInfo.class);
     private GlobalService screen4;
 
     private JLabel labInfo;

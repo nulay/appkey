@@ -1,10 +1,11 @@
 package by.imix.razborImage;
 
-import org.apache.log4j.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.event.KeyEvent;
 
@@ -16,7 +17,7 @@ import java.awt.event.KeyEvent;
  * To change this template use File | Settings | File Templates.
  */
 public class KeyRazbor implements NativeKeyListener {
-    private Logger _log=Logger.getLogger(KeyRazbor.class);
+    private static final Logger _log = LoggerFactory.getLogger(KeyRazbor.class);
     private GlobalService screen4;
     public KeyRazbor(GlobalService screen4) {
         this.screen4=screen4;
@@ -28,11 +29,15 @@ public class KeyRazbor implements NativeKeyListener {
 
             System.exit(1);
         }
-        GlobalScreen.getInstance().addNativeKeyListener(this);
+        GlobalScreen.addNativeKeyListener(this);
     }
 
     public void unregisterNativeHook(){
-        GlobalScreen.unregisterNativeHook();
+        try {
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

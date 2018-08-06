@@ -4,6 +4,8 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,24 +16,25 @@ import org.jnativehook.mouse.NativeMouseInputListener;
  */
 
 public class GlobalMouseListenerExample implements NativeMouseInputListener {
+    private static final Logger _log = LoggerFactory.getLogger(GlobalMouseListenerExample.class);
     public void nativeMouseClicked(NativeMouseEvent e) {
-        System.out.println("Mouse Clicked: " + e.getClickCount());
+        _log.debug("Mouse Clicked: " + e.getClickCount());
     }
 
     public void nativeMousePressed(NativeMouseEvent e) {
-        System.out.println("Mouse Pressed: " + e.getButton());
+        _log.debug("Mouse Pressed: " + e.getButton());
     }
 
     public void nativeMouseReleased(NativeMouseEvent e) {
-        System.out.println("Mouse Released: " + e.getButton());
+        _log.debug("Mouse Released: " + e.getButton());
     }
 
     public void nativeMouseMoved(NativeMouseEvent e) {
-        System.out.println("Mouse Moved: " + e.getX() + ", " + e.getY());
+        _log.debug("Mouse Moved: " + e.getX() + ", " + e.getY());
     }
 
     public void nativeMouseDragged(NativeMouseEvent e) {
-        System.out.println("Mouse Dragged: " + e.getX() + ", " + e.getY());
+        _log.debug("Mouse Dragged: " + e.getX() + ", " + e.getY());
     }
 
     public static void main(String[] args) {
@@ -49,7 +52,7 @@ public class GlobalMouseListenerExample implements NativeMouseInputListener {
         GlobalMouseListenerExample example = new GlobalMouseListenerExample();
 
         //Add the appropriate listeners for the example object.
-        GlobalScreen.getInstance().addNativeMouseListener(example);
-        GlobalScreen.getInstance().addNativeMouseMotionListener(example);
+        GlobalScreen.addNativeMouseListener(example);
+        GlobalScreen.addNativeMouseMotionListener(example);
     }
 }

@@ -5,7 +5,8 @@ import by.imix.razborImage.filters.ComponentFiltrov;
 import by.imix.razborImage.filters.Filtr;
 import by.imix.razborImage.filters.GroupFiltr;
 import by.imix.razborImage.filters.dialogFilter.DialogFilter;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -29,7 +30,7 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 public class PanelToolsFiltr extends JToolBar implements ActionListener{
-    private Logger _log=Logger.getLogger(PanelToolsFiltr.class);
+    private static final Logger _log = LoggerFactory.getLogger(PanelToolsFiltr.class);
     private GlobalService screen4;
 
     private JButton but1createCarta;

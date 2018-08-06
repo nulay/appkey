@@ -1,10 +1,9 @@
 package by.imix.razborImage;
 
-import by.imix.botTank.AppClss;
-import by.imix.botTank.Poehali;
 import by.imix.keyReader.GlobalKeyListenerExample;
 import by.imix.keyReader.KeyRazbor;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +20,7 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class Screen4 extends JFrame implements GlobalService {
-    private Logger _log = Logger.getLogger(Screen4.class);
+    private static final Logger _log = LoggerFactory.getLogger(Screen4.class);
 
     private java.util.Set pointColor;
     private KeyRazbor ks;

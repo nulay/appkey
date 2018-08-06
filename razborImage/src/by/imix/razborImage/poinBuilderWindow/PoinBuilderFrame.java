@@ -8,11 +8,11 @@ package by.imix.razborImage.poinBuilderWindow;
  * To change this template use File | Settings | File Templates.
  */
 
-import by.imix.botTank.AppClss;
 import by.imix.keyReader.GlobalKeyListenerExample;
 import by.imix.keyReader.KeyRazbor;
 import by.imix.razborImage.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +25,7 @@ import java.util.Set;
  * @author mutagen
  */
 public class PoinBuilderFrame extends JFrame implements GlobalService {
-    private Logger _log = Logger.getLogger(PoinBuilderFrame.class);
+    private static final Logger _log = LoggerFactory.getLogger(PoinBuilderFrame.class);
 
     private Set pointColor;
     private KeyRazbor ks;
