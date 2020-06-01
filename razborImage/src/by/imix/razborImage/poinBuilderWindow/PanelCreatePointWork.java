@@ -1,7 +1,7 @@
 package by.imix.razborImage.poinBuilderWindow;
 
 import by.imix.keyReader.EventStopGKL;
-import by.imix.keyReader.GlobalKeyListenerExample;
+import by.imix.keyReader.KeyCatcher;
 import by.imix.keyReader.ObKeyPressed;
 import by.imix.razborImage.AppClss;
 import by.imix.razborImage.DialogChKeyPr;
@@ -223,7 +223,7 @@ public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, Fo
                             ez.printStackTrace();
                         }
                         if (globalFrame.getGlklE() == null) {
-                            globalFrame.setGlklE(new GlobalKeyListenerExample(PanelCreatePointWork.this));
+                            globalFrame.setGlklE(new KeyCatcher(PanelCreatePointWork.this));
                         } else {
                             globalFrame.getGlklE().startKeyLovec();
                         }
@@ -323,7 +323,7 @@ public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, Fo
 
 
     @Override
-    public void fireStopped(GlobalKeyListenerExample gkl) {
+    public void fireStopped(KeyCatcher gkl) {
 
     }
 

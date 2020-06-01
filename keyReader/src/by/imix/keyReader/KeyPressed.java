@@ -1,6 +1,8 @@
 package by.imix.keyReader;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import java.io.Serializable;
+
 
 public class KeyPressed implements Serializable {
     private String key;
@@ -9,10 +11,12 @@ public class KeyPressed implements Serializable {
     private Long relessed;
     private Long timePressed;
 
+
     public String getKey() {
         return key;
     }
 
+    @XmlAttribute(name="keyName")
     public void setKey(String key) {
         this.key = key;
     }
@@ -21,6 +25,7 @@ public class KeyPressed implements Serializable {
         return pressed;
     }
 
+    @XmlAttribute
     public void setPressed(Long pressed) {
         this.pressed = pressed;
     }
@@ -29,6 +34,7 @@ public class KeyPressed implements Serializable {
         return relessed;
     }
 
+    @XmlAttribute
     public void setRelessed(Long relessed) {
         this.relessed = relessed;
     }
@@ -41,6 +47,7 @@ public class KeyPressed implements Serializable {
         return keyCode;
     }
 
+    @XmlAttribute
     public void setKeyCode(Integer keyCode) {
         this.keyCode = keyCode;
     }

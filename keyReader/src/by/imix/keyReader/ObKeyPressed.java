@@ -1,5 +1,8 @@
 package by.imix.keyReader;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +14,7 @@ import java.util.List;
  * Time: 16:27
  * To change this template use File | Settings | File Templates.
  */
+@XmlRootElement
 public class ObKeyPressed implements Serializable {
     private List<KeyPressed> listKP;//список нажатых кнопок
     private String title;//Название
@@ -28,6 +32,8 @@ public class ObKeyPressed implements Serializable {
         return listKP;
     }
 
+    @XmlElementWrapper(name="keys")
+    @XmlElement(name="key")
     public void setListKP(List<KeyPressed> listKP) {
         this.listKP = listKP;
     }

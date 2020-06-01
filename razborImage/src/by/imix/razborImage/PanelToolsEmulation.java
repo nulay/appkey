@@ -1,7 +1,7 @@
 package by.imix.razborImage;
 
 import by.imix.keyReader.EventStopGKL;
-import by.imix.keyReader.GlobalKeyListenerExample;
+import by.imix.keyReader.KeyCatcher;
 import by.imix.keyReader.ObKeyPressed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,7 +178,9 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
                         }
                         dialog.setVisible(false);
                         if (screen4.getClss() == null) {
-                            screen4.setClss(new AppClss());
+                            AppClss appClss = new AppClss();
+                            appClss.setAction(l2.get(listObj.getSelectedIndex()).getListKP());
+                            screen4.setClss(appClss);
                         }
 
                         screen4.getClss().playBot();       //l2.get(listObj.getSelectedIndex()).getListKP()
@@ -196,7 +198,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
             if (screen4.getGlklE() == null || !screen4.getGlklE().isRun()) {
                 but5Rec.setBorder(screen4.ON_BORDER);
                 final JDialog dialog = new JDialog((Frame) screen4, "Старт записи");
-                final JLabel lab = new JLabel("Запсь начнется через 2 секунды, переключитесь в игру, для остановки и записи нажмите Escape.");
+                final JLabel lab = new JLabel("Запсь начнется через 5 секунды, переключитесь в игру, для остановки и записи нажмите Escape.");
                 dialog.add(lab);
                 dialog.pack();
                 dialog.setSize(new Dimension(dialog.getWidth(), dialog.getHeight() + 20));
@@ -207,7 +209,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
                     public void run() {
                         try {
                             for (int i = 0; i < 1; i++) {
-                                lab.setText("Запсь начнется через " + (2 - i) + " секунды, переключитесь в игру, для остановки и записи нажмите Escape.");
+                                lab.setText("Запсь начнется через " + (5 - i) + " секунды, переключитесь в игру, для остановки и записи нажмите Escape.");
                                 Thread.sleep(1L * 1000L);
                             }
                             dialog.setVisible(false);
@@ -215,7 +217,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
                             ez.printStackTrace();
                         }
                         if (screen4.getGlklE() == null) {
-                            screen4.setGlklE(new GlobalKeyListenerExample(PanelToolsEmulation.this));
+                            screen4.setGlklE(new KeyCatcher(PanelToolsEmulation.this));
                         } else {
                             screen4.getGlklE().startKeyLovec();
                         }
@@ -244,7 +246,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
                 File[] listF = openerFile.getSelectedFile().listFiles(new FilenameFilter() {
                     @Override
                     public boolean accept(File dir, String name) {
-                        return name.endsWith("emu");
+                        return name.endsWith("xml");
                     }
                 });
                 if (l2.size() > 0) {
@@ -255,7 +257,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
                     }
                 }
                 for (File f : listF) {
-                    ObKeyPressed okp = (ObKeyPressed) screen4.getFileOperation().readObjectFromFile(f);
+                    ObKeyPressed okp = (ObKeyPressed) screen4.getFileOperation().readObjectFromFile(f, ObKeyPressed.class);
 //                    l.add((okp.getTitle() == null || okp.getTitle().equals("")) ? "NoName" : okp.getTitle());
                     l2.add(okp);
                     l3.add(f);
@@ -336,10 +338,13 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
             int res = saverFileemulation.showSaveDialog((Component) screen4);
             if (res == JFileChooser.APPROVE_OPTION) {
                 File file = saverFileemulation.getSelectedFile();
-                if (!file.getName().endsWith(".emu")) {
-                    file = new File(file.getParentFile(), file.getName() + ".emu");
+                if (!file.getName().endsWith(".xml")) {
+                    file = new File(file.getParentFile(), file.getName() + ".xml");
                 }
-                screen4.getFileOperation().saveFile(file, obKeyPressed);
+//                screen4.getFileOperation().saveFile(file, obKeyPressed);
+                screen4.getFileOperation().saveFile(file, obKeyPressed, ObKeyPressed.class);
+                l2.add(obKeyPressed);
+                listObj.updateUI();
 
                 JOptionPane.showMessageDialog((Component) screen4, "Файл сохранен");
             }
@@ -347,7 +352,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
     }
 
     @Override
-    public void fireStopped(final GlobalKeyListenerExample gkl) {
+    public void fireStopped(final KeyCatcher gkl) {
         dialogCrEm = new DialogChKeyPr((Frame) screen4, new ObKeyPressed(gkl.getListKeyPressed()));
         dialogCrEm.setVisible(true);
         if (screen4.getKeySt() != null) {

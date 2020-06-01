@@ -7,10 +7,6 @@
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} [%-5p][%-16.16t][%32.32c] - %m%n"/>
         </layout>
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="ALL"/>
-            <param name="LevelMax" value="INFO"/>
-        </filter>
     </appender>
 
     <appender name="CONSOLE-WARN" class="org.apache.log4j.ConsoleAppender">
@@ -58,15 +54,17 @@
     <!--<appender-ref ref="CONSOLE-DEBUG"/>-->
     <!--</category>-->
 
-    <!--<category name="rw.gcktc" additivity="false" >-->
-    <!--<level value="DEBUG" />-->
-    <!--<appender-ref ref="CONSOLE-DEBUG"/>-->
-    <!--</category>-->
+
 
     <category name="by.imix" additivity="false" >
         <level value="INFO" />
         <appender-ref ref="FILE-INFO"/>
         <appender-ref ref="CONSOLE-WARN"/>
+    </category>
+
+    <category name="by.imix" additivity="false" >
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE-DEBUG"/>
     </category>
 
     <root>

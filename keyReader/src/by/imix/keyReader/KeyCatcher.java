@@ -16,15 +16,17 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.event.KeyEvent;
 import java.util.*;
 
-public class GlobalKeyListenerExample implements NativeKeyListener {
-    private static final Logger _log = LoggerFactory.getLogger(GlobalKeyListenerExample.class);
+public class KeyCatcher implements NativeKeyListener {
+    private static final Logger _log = LoggerFactory.getLogger(KeyCatcher.class);
     private Date startDate;
-    private List<KeyPressed> lkp=new ArrayList<KeyPressed>();
-    private List<KeyPressed> listkr=new ArrayList<KeyPressed>();
+    private Map<Integer, KeyPressed> keyPressed = new HashMap<>();
+    private List<KeyPressed> listReleasedsKeys = new ArrayList<KeyPressed>();
     private EventStopGKL es;
     private boolean keyRun;
+    private AdapterJavaKey swingKeyAdapter = new AdapterJavaKey();
 
 //    private GlobalKeyListenerExample _log;
 //
@@ -37,11 +39,11 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
 //    }
 
 
-    public GlobalKeyListenerExample() {
+    public KeyCatcher() {
         this(null);
     }
 
-    public GlobalKeyListenerExample(EventStopGKL es) {
+    public KeyCatcher(EventStopGKL es) {
         this.es=es;
         startKeyLovec();
     }
@@ -62,41 +64,33 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
         }
     }
 
-
-
     public void nativeKeyPressed(NativeKeyEvent e) {
         if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
             stopKeyLovec();
         }
+        swingKeyAdapter.nativeKeyPressed(e);
+        KeyEvent keyEvent = swingKeyAdapter.getKeyEvent();
         _log.info("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-        KeyPressed kp=null;
-        for(KeyPressed kpR:lkp){
-            if(kpR.getKeyCode().equals(e.getKeyCode())){
-                kp=kpR;
-                break;
-            }
-        }
-        if(kp!=null) return;
-        kp=new KeyPressed();
-        kp.setKey(NativeKeyEvent.getKeyText(e.getKeyCode()));
-        kp.setKeyCode(e.getKeyCode());
-        kp.setPressed(new Date().getTime()-startDate.getTime());
-        lkp.add(kp);
+        _log.info("Key Pressed KeyCode: " + keyEvent.getKeyCode());
+
+        KeyPressed keyPressedR = keyPressed.get(e.getKeyCode());
+
+        if(keyPressedR!=null) return;
+        keyPressedR=new KeyPressed();
+        keyPressedR.setKey(NativeKeyEvent.getKeyText(e.getKeyCode()));
+        keyPressedR.setKeyCode(keyEvent.getKeyCode());
+        keyPressedR.setPressed(new Date().getTime()-startDate.getTime());
+        keyPressed.put(e.getKeyCode(), keyPressedR);
+
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) {
         _log.info("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-        KeyPressed mykp=null;
-        for(KeyPressed kp:lkp){
-            if(kp.getKeyCode().equals(e.getKeyCode())){
-                mykp=kp;
-                break;
-            }
-        }
+        KeyPressed mykp = keyPressed.get(e.getKeyCode());
         if(mykp!=null){
-            lkp.remove(mykp);
+            keyPressed.remove(e.getKeyCode());
             mykp.setRelessed(new Date().getTime()-startDate.getTime());
-            listkr.add(mykp);
+            listReleasedsKeys.add(mykp);
         }
     }
 
@@ -107,7 +101,7 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
 
     public static void main(String[] args) {
 //        new NativeHookDemo();
-        new GlobalKeyListenerExample();
+        new KeyCatcher();
 
 //        GlobalScreen.unregisterNativeHook();
 //        GlobalScreen.unregisterNativeHook();
@@ -117,11 +111,11 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
     }
 
     public List<KeyPressed> getListKeyPressed() {
-        return listkr;
+        return listReleasedsKeys;
     }
 
     public void stopKeyLovec(){
-        Collections.sort(listkr,new Comparator<KeyPressed>(){
+        Collections.sort(listReleasedsKeys,new Comparator<KeyPressed>(){
             //                boolean equals(Object obj){
 //                   return true;
 //                }
@@ -130,11 +124,11 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
                 return (o1.getPressed()>o2.getPressed())?1:(o1.getPressed().equals(o2.getPressed()))?0:-1;
             }
         });
-        for(KeyPressed kpr:listkr){
+        for(KeyPressed kpr: listReleasedsKeys){
             _log.info(kpr.toString());
 //                kpr.setRelessed(kpr.getPressed()+10);
         }
-        _log.info("Размер списка "+lkp.size());
+        _log.info("Размер списка "+ keyPressed.size());
         try {
             GlobalScreen.unregisterNativeHook();
         } catch (NativeHookException e) {

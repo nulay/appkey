@@ -1,6 +1,6 @@
 package by.imix.razborImage;
 
-import by.imix.keyReader.GlobalKeyListenerExample;
+import by.imix.keyReader.KeyCatcher;
 import by.imix.keyReader.KeyRazbor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class Screen4 extends JFrame implements GlobalService {
 
     private AppClss clss;
 
-    private GlobalKeyListenerExample glklE;
+    private KeyCatcher glklE;
     private FileOperation fo;
 
     public FileOperation getFileOperation() {
@@ -53,6 +53,7 @@ public class Screen4 extends JFrame implements GlobalService {
     private PanelInfo panelInfo;
 
     public Screen4() {
+        _log.info("Start Screen4");
         fo = new FileOperation();
         getContentPane().setLayout(new BorderLayout());
 
@@ -309,6 +310,10 @@ public class Screen4 extends JFrame implements GlobalService {
         this.keyinstr = keyinstr;
     }
 
+    public PanelToolsEmulation getPanelToolsEmulation() {
+        return panelToolsEmulation;
+    }
+
     @Override
     public PanelToolsFiltr getPanelToolsFiltr() {
         return panelToolsFiltr;
@@ -340,11 +345,11 @@ public class Screen4 extends JFrame implements GlobalService {
         this.clss = clss;
     }
 
-    public GlobalKeyListenerExample getGlklE() {
+    public KeyCatcher getGlklE() {
         return glklE;
     }
 
-    public void setGlklE(GlobalKeyListenerExample glklE) {
+    public void setGlklE(KeyCatcher glklE) {
         this.glklE = glklE;
     }
 }

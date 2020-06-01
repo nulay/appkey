@@ -91,10 +91,10 @@ public class PanelScreenshot extends JToolBar implements FocusListener, ActionLi
         but1HandZahvat=new JButton(new ImageIcon("images/play.png"));
         but1HandZahvat.setName("but1HandZahvat");
         but1HandZahvat.setBorder(globalFrame.OFF_BORDER);
-        but1HandZahvat.setToolTipText("Auto capture");
+        but1HandZahvat.setToolTipText("Capture screen use F button");
         but2AutoZahvat=new JButton(new ImageIcon("images/play.png"));
         but2AutoZahvat.setName("but2AutoZahvat");
-        but2AutoZahvat.setToolTipText("Capture screen");
+        but2AutoZahvat.setToolTipText("Auto capture 10 frame");
         but2AutoZahvat.setBorder(globalFrame.OFF_BORDER);
         but3SaveScreen=new JButton(new ImageIcon("images/save.png"));
         but3SaveScreen.setToolTipText("Save screen");

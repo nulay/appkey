@@ -41,7 +41,7 @@ public class KeyRazbor implements NativeKeyListener {
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeKeyEvent) {
-        if(KeyEvent.VK_F==nativeKeyEvent.getKeyCode()){
+        if(NativeKeyEvent.VC_F==nativeKeyEvent.getKeyCode()){
             eventStop.firePressed();
         }
     }

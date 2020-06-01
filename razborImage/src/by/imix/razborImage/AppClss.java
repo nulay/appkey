@@ -4,6 +4,7 @@ import by.imix.keyReader.KeyPressed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class AppClss {
     }
 
     public void playBot() {
+        _log.info("AppClss.playBot");
         keyEnd=false;
         if(true){
             _log.info("Запуск эмуляции");
@@ -61,6 +63,7 @@ public class AppClss {
                         for(int y=0;y<lkpNow.size();y++){
                             if(keyEnd) break;
                             KeyPressed kp1=lkpNow.get(y);
+                            _log.debug("Try to push:"+ kp1.getKey());
                             Poehali p=new Poehali(kp1.getKeyCode(),kp1.getTimePressed());
                             p.start();
                             if(y+1>=lkpNow.size()) break;
@@ -79,6 +82,7 @@ public class AppClss {
                         lkpNow=null;
                     }
                     KeyPressed kp1=lkp.get(i);
+                    _log.debug("Try to push:"+ kp1.getKey());
                     Poehali p=new Poehali(kp1.getKeyCode(),kp1.getTimePressed());
                     p.start();
                     if(i+1>=lkp.size()) break;

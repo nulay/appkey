@@ -8,5 +8,5 @@ package by.imix.keyReader;
  * To change this template use File | Settings | File Templates.
  */
 public interface EventStopGKL {
-    void fireStopped(GlobalKeyListenerExample gkl);
+    void fireStopped(KeyCatcher gkl);
 }

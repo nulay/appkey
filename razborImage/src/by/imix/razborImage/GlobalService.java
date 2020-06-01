@@ -1,6 +1,6 @@
 package by.imix.razborImage;
 
-import by.imix.keyReader.GlobalKeyListenerExample;
+import by.imix.keyReader.KeyCatcher;
 
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -19,6 +19,7 @@ public interface GlobalService {
     Integer REC = 3;
     Integer AUTO_ZAHVAT = 4;
 
+    PanelToolsEmulation getPanelToolsEmulation();
     PanelToolsFiltr getPanelToolsFiltr();
     PanelInfo getPanelInfo();
     PanelScreenshot getPanelScreenshot();
@@ -30,8 +31,8 @@ public interface GlobalService {
     AppClss getClss();
     void setClss(AppClss clss);
 
-    GlobalKeyListenerExample getGlklE();
-    void setGlklE(GlobalKeyListenerExample glklE);
+    KeyCatcher getGlklE();
+    void setGlklE(KeyCatcher glklE);
 
     FileOperation getFileOperation();
     void setFileOperation(FileOperation fo);
