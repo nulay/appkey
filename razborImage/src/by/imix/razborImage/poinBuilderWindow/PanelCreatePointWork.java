@@ -1,8 +1,6 @@
 package by.imix.razborImage.poinBuilderWindow;
 
-import by.imix.keyReader.EventStopGKL;
-import by.imix.keyReader.KeyCatcher;
-import by.imix.keyReader.ObKeyPressed;
+import by.imix.keyReader.*;
 import by.imix.razborImage.AppClss;
 import by.imix.razborImage.DialogChKeyPr;
 import by.imix.razborImage.GlobalService;
@@ -19,6 +17,7 @@ import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -223,9 +222,9 @@ public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, Fo
                             ez.printStackTrace();
                         }
                         if (globalFrame.getGlklE() == null) {
-                            globalFrame.setGlklE(new KeyCatcher(PanelCreatePointWork.this));
+                            globalFrame.setGlklE(new GlobalCatcher(PanelCreatePointWork.this, true, false));
                         } else {
-                            globalFrame.getGlklE().startKeyLovec();
+                            globalFrame.getGlklE().startKeyCatcher();
                         }
 
                     }
@@ -281,7 +280,7 @@ public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, Fo
             if(globalFrame.getKeySt().equals(globalFrame.REC)){
                 but5Rec.setBorder(but6Folder.getBorder());
                 globalFrame.setKeySt(null);
-                globalFrame.getGlklE().stopKeyLovec();
+                globalFrame.getGlklE().stopKeyCatcher();
             }
             globalFrame.setKeySt(null);
             but7Stop.setEnabled(false);
@@ -323,7 +322,7 @@ public class PanelCreatePointWork extends JToolBar implements ToolsEmulation, Fo
 
 
     @Override
-    public void fireStopped(KeyCatcher gkl) {
+    public void fireStopped(List<TimeEvent> gkl) {
 
     }
 

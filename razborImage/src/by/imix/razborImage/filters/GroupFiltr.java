@@ -1,6 +1,6 @@
 package by.imix.razborImage.filters;
 
-import by.imix.keyReader.KeyPressed;
+import by.imix.keyReader.TimeEvent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -87,9 +87,9 @@ public class GroupFiltr implements ComponentFiltrov, Serializable {
                 }
             }
         }
-        List<KeyPressed> listKp=null;
+        List<TimeEvent> listKp=null;
         if(f.getObKeyPressed()!=null){
-            listKp=f.getObKeyPressed().getListKP();
+            listKp=f.getObKeyPressed().getListTimeEvents();
         }
         carta.startAction(listKp,f.isKeyRootStart());
         if(nextGroup!=null){

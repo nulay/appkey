@@ -8,6 +8,7 @@ package by.imix.razborImage.poinBuilderWindow;
  * To change this template use File | Settings | File Templates.
  */
 
+import by.imix.keyReader.GlobalCatcher;
 import by.imix.keyReader.KeyCatcher;
 import by.imix.keyReader.KeyRazbor;
 import by.imix.razborImage.*;
@@ -33,7 +34,7 @@ public class PoinBuilderFrame extends JFrame implements GlobalService {
 
     protected AppClss clss;
 
-    protected KeyCatcher glklE;
+    protected GlobalCatcher glklE;
     protected FileOperation fo;
 
     protected Integer keySt = null;
@@ -288,12 +289,12 @@ public class PoinBuilderFrame extends JFrame implements GlobalService {
     }
 
     @Override
-    public KeyCatcher getGlklE() {
+    public GlobalCatcher getGlklE() {
         return glklE;
     }
 
     @Override
-    public void setGlklE(KeyCatcher glklE) {
+    public void setGlklE(GlobalCatcher glklE) {
         this.glklE = glklE;
     }
 

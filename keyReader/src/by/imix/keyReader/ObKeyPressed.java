@@ -2,6 +2,7 @@ package by.imix.keyReader;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,26 +17,28 @@ import java.util.List;
  */
 @XmlRootElement
 public class ObKeyPressed implements Serializable {
-    private List<KeyPressed> listKP;//список нажатых кнопок
+    private List<TimeEvent> listTimeEvents;//список нажатых кнопок
     private String title;//Название
     private String description;//Описание
 
     public ObKeyPressed() {
-        listKP=new ArrayList<KeyPressed>();
+        listTimeEvents =new ArrayList<>();
     }
 
-    public ObKeyPressed(List<KeyPressed> listKP) {
-        this.listKP = listKP;
+    public ObKeyPressed(List<TimeEvent> listTimeEvents) {
+        this.listTimeEvents = listTimeEvents;
     }
 
-    public List<KeyPressed> getListKP() {
-        return listKP;
+    public List<TimeEvent> getListTimeEvents() {
+        return listTimeEvents;
     }
 
-    @XmlElementWrapper(name="keys")
-    @XmlElement(name="key")
-    public void setListKP(List<KeyPressed> listKP) {
-        this.listKP = listKP;
+    @XmlElementWrapper(name="events")
+    @XmlElements( {
+            @XmlElement( name="mouseevent", type = MouseTimeEvent.class ),
+            @XmlElement( name="keyevent", type = KeyTimeEvent.class)} )
+    public void setListTimeEvents(List<TimeEvent> listTimeEvents) {
+        this.listTimeEvents = listTimeEvents;
     }
 
     public String getTitle() {

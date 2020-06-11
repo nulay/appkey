@@ -1,8 +1,6 @@
 package by.imix.razborImage;
 
-import by.imix.keyReader.EventStopGKL;
-import by.imix.keyReader.KeyCatcher;
-import by.imix.keyReader.ObKeyPressed;
+import by.imix.keyReader.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +36,9 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
 
     private JButton but4Play;
     private JButton but5Rec;
-    private JButton but6Folder;
+    private JButton butOpenEmulations;
     private JButton but7Stop;
-    private JButton but8Correct;
+    private JButton but8EditEmulation;
     private JButton but9delete;
 
     private DialogChKeyPr dialogCrEm;
@@ -84,17 +82,17 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
         but5Rec = new JButton(new ImageIcon("images/rec.png"));//запись
         but5Rec.setName("but5Rec");
         but5Rec.setBorder(screen4.OFF_BORDER);
-        but6Folder = new JButton(new ImageIcon("images/folder.png"));
-        but6Folder.setName("but6Folder");
-        but6Folder.setBorder(screen4.OFF_BORDER);
+        butOpenEmulations = new JButton(new ImageIcon("images/folder.png"));
+        butOpenEmulations.setName("but6Folder");
+        butOpenEmulations.setBorder(screen4.OFF_BORDER);
         but7Stop = new JButton(new ImageIcon("images/stop.png"));//стоп
         but7Stop.setName("but7Stop");
         but7Stop.setEnabled(false);
         but7Stop.setBorder(screen4.OFF_BORDER);
-        but8Correct = new JButton(new ImageIcon("images/redact.png"));
-        but8Correct.setName("but8Correct");
-        but8Correct.setBorder(screen4.OFF_BORDER);
-        but8Correct.setEnabled(false);
+        but8EditEmulation = new JButton(new ImageIcon("images/redact.png"));
+        but8EditEmulation.setName("but8Correct");
+        but8EditEmulation.setBorder(screen4.OFF_BORDER);
+        but8EditEmulation.setEnabled(false);
         but9delete = new JButton(new ImageIcon("images/delete.png"));
         but9delete.setName("but9delete");
         but9delete.setBorder(screen4.OFF_BORDER);
@@ -107,10 +105,10 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
         panforBut.add(but5Rec);
         but4Play.addActionListener(this);
         panforBut.add(but4Play);
-        but6Folder.addActionListener(this);
-        panforBut.add(but6Folder);
-        but8Correct.addActionListener(this);
-        panforBut.add(but8Correct);
+        butOpenEmulations.addActionListener(this);
+        panforBut.add(butOpenEmulations);
+        but8EditEmulation.addActionListener(this);
+        panforBut.add(but8EditEmulation);
         but9delete.addActionListener(this);
         panforBut.add(but9delete);
 
@@ -179,7 +177,7 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
                         dialog.setVisible(false);
                         if (screen4.getClss() == null) {
                             AppClss appClss = new AppClss();
-                            appClss.setAction(l2.get(listObj.getSelectedIndex()).getListKP());
+                            appClss.setAction(l2.get(listObj.getSelectedIndex()).getListTimeEvents());
                             screen4.setClss(appClss);
                         }
 
@@ -217,9 +215,9 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
                             ez.printStackTrace();
                         }
                         if (screen4.getGlklE() == null) {
-                            screen4.setGlklE(new KeyCatcher(PanelToolsEmulation.this));
+                            screen4.setGlklE(new GlobalCatcher(PanelToolsEmulation.this, true, true));
                         } else {
-                            screen4.getGlklE().startKeyLovec();
+                            screen4.getGlklE().startKeyCatcher();
                         }
 
                     }
@@ -270,12 +268,12 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
             if (screen4.getKeySt().equals(Screen4.PLAY)) {
                 screen4.getClss().setKeyEnd(true);
                 showEmButton();
-                but4Play.setBorder(but6Folder.getBorder());
+                but4Play.setBorder(butOpenEmulations.getBorder());
             }
             if (screen4.getKeySt().equals(Screen4.REC)) {
-                but5Rec.setBorder(but6Folder.getBorder());
+                but5Rec.setBorder(butOpenEmulations.getBorder());
                 screen4.setKeySt(null);
-                screen4.getGlklE().stopKeyLovec();
+                screen4.getGlklE().stopKeyCatcher();
             }
             screen4.setKeySt(null);
             but7Stop.setEnabled(false);
@@ -305,13 +303,13 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
 
     public void hideEmButton() {
         but9delete.setEnabled(false);
-        but8Correct.setEnabled(false);
+        but8EditEmulation.setEnabled(false);
         but4Play.setEnabled(false);
     }
 
     public void showEmButton() {
         but9delete.setEnabled(true);
-        but8Correct.setEnabled(true);
+        but8EditEmulation.setEnabled(true);
         but4Play.setEnabled(true);
     }
 
@@ -351,18 +349,18 @@ public class PanelToolsEmulation extends JToolBar implements ToolsEmulation, Foc
         }
     }
 
+    public Vector getAllObjEmulation() {
+        return l2;
+    }
+
     @Override
-    public void fireStopped(final KeyCatcher gkl) {
-        dialogCrEm = new DialogChKeyPr((Frame) screen4, new ObKeyPressed(gkl.getListKeyPressed()));
+    public void fireStopped(final java.util.List<TimeEvent> timeEvents) {
+        dialogCrEm = new DialogChKeyPr((Frame) screen4, new ObKeyPressed(timeEvents));
         dialogCrEm.setVisible(true);
         if (screen4.getKeySt() != null) {
-            but5Rec.setBorder(but6Folder.getBorder());
+            but5Rec.setBorder(butOpenEmulations.getBorder());
             screen4.setKeySt( null);
             but7Stop.setEnabled(false);
         }
-    }
-
-    public Vector getAllObjEmulation() {
-        return l2;
     }
 }

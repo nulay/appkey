@@ -1,7 +1,9 @@
 package by.imix.razborImage;
 
-import by.imix.keyReader.KeyPressed;
+import by.imix.keyReader.KeyTimeEvent;
+import by.imix.keyReader.MouseTimeEvent;
 import by.imix.keyReader.ObKeyPressed;
+import by.imix.keyReader.TimeEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,18 +53,26 @@ public class DialogChKeyPr extends JDialog{
         pEl.add(panI);
 
         int i=1;
-        for(KeyPressed kp:okp.getListKP()){
-            final JPanel pan=new JPanel(new GridLayout(1,6,5,12));
-            pan.add(new JLabel(i+""));
-            pan.add(new JLabel(kp.getKey()));
-            pan.add(new JTextField(kp.getPressed()+"",4));
-            pan.add(new JTextField(kp.getRelessed()+"",4));
-            pan.add(new JLabel(kp.getTimePressed()+""));
-            JButton butDel=new JButton(new ImageIcon("images/del.png"));
+        for(TimeEvent timeEvent :okp.getListTimeEvents()){
+            final JPanel pan = new JPanel(new GridLayout(1, 6, 5, 12));
+            pan.add(new JLabel(i + ""));
+            if(timeEvent instanceof KeyTimeEvent) {
+                KeyTimeEvent kp = (KeyTimeEvent) timeEvent;
+                pan.add(new JLabel(kp.getKey()));
+            }
+            if(timeEvent instanceof MouseTimeEvent) {
+                MouseTimeEvent mouseTimeEvent = (MouseTimeEvent) timeEvent;
+                pan.add(new JLabel(mouseTimeEvent.getKeyButton()+""));
+            }
+            pan.add(new JTextField(timeEvent.getTimeStartEvent() + "", 4));
+            pan.add(new JTextField(timeEvent.getTimeStopEvent() + "", 4));
+            pan.add(new JLabel(timeEvent.getTimeStartEvent() + ""));
+
+            JButton butDel = new JButton(new ImageIcon("images/del.png"));
             butDel.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Container c=pan.getParent();
+                    Container c = pan.getParent();
                     c.remove(pan);
                     c.getParent().getParent().repaint();
                 }
@@ -95,19 +105,25 @@ public class DialogChKeyPr extends JDialog{
                 ObKeyPressed obKeyPressed=new ObKeyPressed();
                 obKeyPressed.setTitle(tf.getText());
                 obKeyPressed.setDescription(ta.getText());
-                obKeyPressed.setListKP(DialogChKeyPr.this.okp.getListKP());
+                obKeyPressed.setListTimeEvents(DialogChKeyPr.this.okp.getListTimeEvents());
 
-                java.util.List<KeyPressed> lkp=new ArrayList<KeyPressed>();
+                java.util.List<TimeEvent> lkp=new ArrayList<>();
 
                 Component[] lcomp= ((JPanel)((JViewport)((JScrollPane)((JPanel)((JButton)e.getSource()).getParent().getParent()).getComponent(3)).getComponent(0)).getComponent(0)).getComponents();
                 for(int i=1;i<lcomp.length;i++){
                     JPanel comp=(JPanel)lcomp[i];
-                    KeyPressed kpr=obKeyPressed.getListKP().get(Integer.parseInt(((JLabel)comp.getComponent(0)).getText())-1);
-                    kpr.setPressed(Long.parseLong(((JTextField)comp.getComponent(2)).getText()));
-                    kpr.setRelessed(Long.parseLong(((JTextField)comp.getComponent(3)).getText()));
-                    lkp.add(kpr);
+                    TimeEvent timeEvent=obKeyPressed.getListTimeEvents().get(Integer.parseInt(((JLabel)comp.getComponent(0)).getText())-1);
+                    if(timeEvent instanceof KeyTimeEvent) {
+                        //TODO need correct this
+//                        KeyTimeEvent kp = (KeyTimeEvent) timeEvent;
+//                        kp.setKey(((JLabel)comp.getComponent(0)).getText()));
+//                        kp.setKeyCode(((JLabel)comp.getComponent(0)).getText()););
+                    }
+                    timeEvent.setTimeStartEvent(Long.parseLong(((JTextField) comp.getComponent(2)).getText()));
+                    timeEvent.setTimeStopEvent(Long.parseLong(((JTextField) comp.getComponent(3)).getText()));
+                    lkp.add(timeEvent);
                 }
-                obKeyPressed.setListKP(lkp);
+                obKeyPressed.setListTimeEvents(lkp);
                 DialogChKeyPr.this.setVisible(false);
                 ((Screen4)DialogChKeyPr.this.getOwner()).getToolEmulation().saveObKeyPressed(obKeyPressed);
             }

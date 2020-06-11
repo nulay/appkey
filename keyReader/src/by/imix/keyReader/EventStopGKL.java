@@ -1,5 +1,7 @@
 package by.imix.keyReader;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: miha
@@ -8,5 +10,5 @@ package by.imix.keyReader;
  * To change this template use File | Settings | File Templates.
  */
 public interface EventStopGKL {
-    void fireStopped(KeyCatcher gkl);
+    void fireStopped(List<TimeEvent> gkl);
 }

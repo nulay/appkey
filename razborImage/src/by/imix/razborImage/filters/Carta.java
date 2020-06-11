@@ -1,6 +1,6 @@
 package by.imix.razborImage.filters;
 
-import by.imix.keyReader.KeyPressed;
+import by.imix.keyReader.TimeEvent;
 import by.imix.razborImage.AppClss;
 
 import java.io.Serializable;
@@ -55,7 +55,7 @@ public class Carta implements ComponentFiltrov, Serializable {
         }
     }
 
-    public void startAction(final List<KeyPressed> lkp,boolean kna){
+    public void startAction(final List<TimeEvent> lkp, boolean kna){
         if(lkp==null){
             //останавливваем апп
             appClss.stop();

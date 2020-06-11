@@ -1,5 +1,6 @@
 package by.imix.razborImage;
 
+import by.imix.keyReader.GlobalCatcher;
 import by.imix.keyReader.KeyCatcher;
 import by.imix.keyReader.KeyRazbor;
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ public class Screen4 extends JFrame implements GlobalService {
 
     private AppClss clss;
 
-    private KeyCatcher glklE;
+    private GlobalCatcher glklE;
     private FileOperation fo;
 
     public FileOperation getFileOperation() {
@@ -345,11 +346,11 @@ public class Screen4 extends JFrame implements GlobalService {
         this.clss = clss;
     }
 
-    public KeyCatcher getGlklE() {
+    public GlobalCatcher getGlklE() {
         return glklE;
     }
 
-    public void setGlklE(KeyCatcher glklE) {
+    public void setGlklE(GlobalCatcher glklE) {
         this.glklE = glklE;
     }
 }

@@ -1,6 +1,8 @@
 package by.imix.razborImage;
 
+import by.imix.keyReader.GlobalCatcher;
 import by.imix.keyReader.KeyCatcher;
+import jdk.nashorn.internal.objects.Global;
 
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -31,8 +33,8 @@ public interface GlobalService {
     AppClss getClss();
     void setClss(AppClss clss);
 
-    KeyCatcher getGlklE();
-    void setGlklE(KeyCatcher glklE);
+    GlobalCatcher getGlklE();
+    void setGlklE(GlobalCatcher glklE);
 
     FileOperation getFileOperation();
     void setFileOperation(FileOperation fo);

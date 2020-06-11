@@ -28,7 +28,7 @@ public class FileOperation {
     }
 
 
-    public boolean saveFile(File file, Serializable saveObject, Class classObj) {
+    public boolean saveFile(File file, Serializable saveObject, Class... classObj) {
         try {
 
             JAXBContext jaxbContext = JAXBContext.newInstance(classObj);

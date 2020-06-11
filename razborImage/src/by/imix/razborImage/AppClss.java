@@ -1,11 +1,10 @@
 package by.imix.razborImage;
 
-import by.imix.keyReader.KeyPressed;
+import by.imix.keyReader.KeyTimeEvent;
+import by.imix.keyReader.TimeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,19 +20,19 @@ import java.util.List;
 public class AppClss {
     private static final Logger _log = LoggerFactory.getLogger(AppClss.class);
     private boolean keyEnd=false;
-    private List<KeyPressed> lkp;
-    private List<KeyPressed> lkpNow;
+    private List<TimeEvent> lkp;
+    private List<TimeEvent> lkpNow;
     private boolean keyPause;
 
 
     public AppClss() {
     }
 
-    public void setAction(List<KeyPressed> lkp){
+    public void setAction(List<TimeEvent> lkp){
       this.lkp=lkp;
     }
 
-    public void playNow(List<KeyPressed> lkpNow) {
+    public void playNow(List<KeyTimeEvent> lkpNow) {
         lkpNow=lkpNow;
     }
 
@@ -44,7 +43,7 @@ public class AppClss {
             _log.info("Запуск эмуляции");
             while(!keyEnd){
                 try {
-                    Thread.sleep(lkp.get(0).getPressed());
+                    Thread.sleep(lkp.get(0).getTimeStartEvent());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -62,16 +61,45 @@ public class AppClss {
                     if(lkpNow!=null){
                         for(int y=0;y<lkpNow.size();y++){
                             if(keyEnd) break;
-                            KeyPressed kp1=lkpNow.get(y);
-                            _log.debug("Try to push:"+ kp1.getKey());
-                            Poehali p=new Poehali(kp1.getKeyCode(),kp1.getTimePressed());
-                            p.start();
-                            if(y+1>=lkpNow.size()) break;
-                            KeyPressed kp2=lkpNow.get(y+1);
+                            TimeEvent se1=lkpNow.get(y);
+                            if(se1 instanceof KeyTimeEvent) {
+                                KeyTimeEvent kp1 = (KeyTimeEvent) se1;
+                                _log.debug("Try to push:" + kp1.getKey());
+                                Poehali p = new Poehali(kp1.getKeyCode(), kp1.getTimeStartEvent());
+                                p.start();
+                                if (y + 1 >= lkpNow.size()) break;
+                                TimeEvent se2=lkpNow.get(y + 1);
+                                if(se2 instanceof KeyTimeEvent) {
+                                    KeyTimeEvent kp2 = (KeyTimeEvent) se2;
+                                    try {
+                                        Long time = kp2.getTimeStartEvent() - kp1.getTimeStartEvent();
+                                        if (time < 0) {
+                                            time = 0L;
+                                        }
+                                        Thread.sleep(time);
+//                        Thread.sleep(10);
+                                    } catch (InterruptedException e) {
+                                        _log.error(e.getMessage());
+                                    }
+                                }
+                            }
+                        }
+                        lkpNow=null;
+                    }
+                    TimeEvent se1=lkp.get(i);
+                    if(se1 instanceof KeyTimeEvent) {
+                        KeyTimeEvent kp1 = (KeyTimeEvent) se1;
+                        _log.debug("Try to push:" + kp1.getKey());
+                        Poehali p = new Poehali(kp1.getKeyCode(), kp1.getTimeStartEvent());
+                        p.start();
+                        if (i + 1 >= lkp.size()) break;
+                        TimeEvent se2=lkp.get(i + 1);
+                        if(se2 instanceof KeyTimeEvent) {
+                            KeyTimeEvent kp2 = (KeyTimeEvent) se2;
                             try {
-                                Long time=kp2.getPressed()-kp1.getPressed();
-                                if(time<0){
-                                    time=0L;
+                                Long time = kp2.getTimeStartEvent() - kp1.getTimeStartEvent();
+                                if (time < 0) {
+                                    time = 0L;
                                 }
                                 Thread.sleep(time);
 //                        Thread.sleep(10);
@@ -79,23 +107,6 @@ public class AppClss {
                                 _log.error(e.getMessage());
                             }
                         }
-                        lkpNow=null;
-                    }
-                    KeyPressed kp1=lkp.get(i);
-                    _log.debug("Try to push:"+ kp1.getKey());
-                    Poehali p=new Poehali(kp1.getKeyCode(),kp1.getTimePressed());
-                    p.start();
-                    if(i+1>=lkp.size()) break;
-                    KeyPressed kp2=lkp.get(i+1);
-                    try {
-                        Long time=kp2.getPressed()-kp1.getPressed();
-                       if(time<0){
-                           time=0L;
-                       }
-                        Thread.sleep(time);
-//                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        _log.error(e.getMessage());
                     }
                 }
             }
@@ -104,21 +115,21 @@ public class AppClss {
         }
 
         _log.debug("start");
-        DD d1=new DD("key",0, KeyEvent.VK_Z,2000L, 2000L);
+        DD d1=new DD("key",0, java.awt.event.KeyEvent.VK_Z,2000L, 2000L);
         d1.start();
 //            by.imix.razborImage.DD d2=new by.imix.razborImage.DD("mouse",0,InputEvent.BUTTON3_MASK,new Long(9000));
 //            d2.start();
-        DD d3=new DD("key",0,KeyEvent.VK_UP,10L,20000L);
+        DD d3=new DD("key",0, java.awt.event.KeyEvent.VK_UP,10L,20000L);
         d3.start();
 
 //            by.imix.razborImage.DD d5=new by.imix.razborImage.DD("key",0,KeyEvent.VK_X,10L,330L);
 //            d5.start();
 
-        DD d6=new DD("key",0,KeyEvent.VK_LEFT,1000L,300L);
+        DD d6=new DD("key",0, java.awt.event.KeyEvent.VK_LEFT,1000L,300L);
         d6.start();
 
 
-        DD d4=new DD("key",0,KeyEvent.VK_SPACE,1000L,60L);
+        DD d4=new DD("key",0, java.awt.event.KeyEvent.VK_SPACE,1000L,60L);
         d4.start();
 //            by.imix.razborImage.DD d5=new by.imix.razborImage.DD("key",0,KeyEvent.VK_2,new Long(7000));
 //            d5.start();
@@ -138,11 +149,11 @@ public class AppClss {
             e.printStackTrace();
         }
 
-        List<KeyPressed> lkps=new ArrayList<KeyPressed>();
+        List<TimeEvent> lkps=new ArrayList<TimeEvent>();
         try {
             FileInputStream fis = new FileInputStream("temp.out");
             ObjectInputStream oin = new ObjectInputStream(fis);
-            lkps = (List<KeyPressed>) oin.readObject();
+            lkps = (List<TimeEvent>) oin.readObject();
 
         } catch (IOException e) {
             _log.debug(e.getMessage());
